@@ -1,18 +1,12 @@
 import { Fragment, useState } from "react";
 import { Dialog, Menu, Transition } from "@headlessui/react";
-import {
-  HomeIcon,
-  Bars2Icon,
-  XMarkIcon,
-} from "@heroicons/react/24/outline";
-import ContactTables from "./TechnicianDashboardComponents/ContactTables";
+import { HomeIcon, Bars2Icon, XMarkIcon } from "@heroicons/react/24/outline";
+import ContactTables from "../../TechnicianDashboardComponents/ContactTables";
 
 const navigation = [
   { name: "Dashboard", to: "#", icon: HomeIcon, current: true },
 ];
-const userNavigation = [
-  { name: "Sign out", to: "/" },
-];
+const userNavigation = [{ name: "Sign out", to: "/" }];
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");

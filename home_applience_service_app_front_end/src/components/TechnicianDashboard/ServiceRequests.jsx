@@ -2,22 +2,11 @@ import axios from "axios";
 import { useEffect } from "react";
 import { useState } from "react";
 
-export default function ContactTables() {
-  // useEffect(() => {
-  //   getReq();
-  // }, []);
+export default function ServiceRequests() {
   const [fetchServiceRequests, setFetchServiceRequests] = useState([]);
-  // const getReq = () => {
-  //   axios
-  //     .get("http://localhost:8080/service/all")
-  //     .then((res) => setFetchServiceRequests(res.data.data));
-  //   console.log(fetchServiceRequests);
-  // };
   useEffect(() => {
     getReq();
   }, []);
-
-  // const [fetchServiceRequests, setFetchServiceRequests] = useState([]);
 
   const getReq = () => {
     axios

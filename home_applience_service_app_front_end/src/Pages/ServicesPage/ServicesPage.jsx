@@ -1,7 +1,7 @@
 import { WrenchIcon } from "@heroicons/react/16/solid";
 import { ServerIcon } from "@heroicons/react/20/solid";
 import { FlagIcon } from "@heroicons/react/24/solid";
-import NavigationBarHome from "../NavigationBar/NavigationBarHome";
+import NavigationBarHome from "../../components/NavigationBar/NavigationBarHome";
 import { motion } from "framer-motion";
 import image from "../../images/Aboutus.jpg";
 

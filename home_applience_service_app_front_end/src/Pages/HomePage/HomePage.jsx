@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import NavigationBar from "../NavigationBar/NavigationBar";
+import NavigationBar from "../../components/NavigationBar/NavigationBar";
 import { motion } from "framer-motion";
 import Footer from "../NavigationBar/Footer/Footer";
 

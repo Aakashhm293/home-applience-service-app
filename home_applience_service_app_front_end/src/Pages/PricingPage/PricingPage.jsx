@@ -1,5 +1,5 @@
 import { CheckIcon } from "@heroicons/react/20/solid";
-import NavigationBarHome from "../NavigationBar/NavigationBarHome";
+import NavigationBarHome from "../../components/NavigationBar/NavigationBarHome";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 
