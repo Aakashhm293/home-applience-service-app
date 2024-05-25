@@ -2,6 +2,7 @@ import { Fragment, useState } from "react";
 import { Dialog, Menu, Transition } from "@headlessui/react";
 import { HomeIcon, Bars2Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import ServiceRequests from "../../../components/TechnicianDashboard/ServiceRequests";
+import { Link } from "react-router-dom";
 
 const navigation = [
   { name: "Dashboard", to: "#", icon: HomeIcon, current: true },
@@ -116,9 +117,9 @@ export default function TechnicianDashboard() {
             <div className="mt-5 flex-1 flex flex-col">
               <nav className="flex-1 px-2 pb-4 space-y-1">
                 {navigation.map((item) => (
-                  <a
+                  <Link
                     key={item.name}
-                    href={item.to}
+                    to={item.to}
                     className={classNames(
                       item.current
                         ? "bg-indigo-800 text-white"
@@ -131,7 +132,7 @@ export default function TechnicianDashboard() {
                       aria-hidden="true"
                     />
                     {item.name}
-                  </a>
+                  </Link>
                 ))}
               </nav>
             </div>

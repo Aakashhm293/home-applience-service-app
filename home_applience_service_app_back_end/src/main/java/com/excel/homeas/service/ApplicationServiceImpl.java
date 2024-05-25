@@ -241,9 +241,8 @@ public class ApplicationServiceImpl implements ApplicationService{
 		
         if(list != null) {
         	return list;
-        } else {
-        	throw new ApplienceNotFound(ExceptionEnum.APPLIENCEDETAILSNOTFOUND);
         }
+		return null; 
     }
 	
 	@Override

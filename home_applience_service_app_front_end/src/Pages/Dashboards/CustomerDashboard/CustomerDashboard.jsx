@@ -11,7 +11,7 @@ const user = {
     "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
 };
 const navigation = [{ name: "Dashboard", to: "#", current: true }];
-const userNavigation = [{ name: "Sign out", to: "/", current: false}];
+const userNavigation = [{ name: "Sign out", to: "/" }];
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
@@ -101,15 +101,15 @@ export default function CustomerDashboard() {
                               {userNavigation.map((item) => (
                                 <Menu.Item key={item.name}>
                                   {({ active }) => (
-                                    <a
-                                      href={item.href}
+                                    <Link
+                                      to={item.to}
                                       className={classNames(
                                         active ? "bg-gray-100" : "",
-                                        "block py-2 px-4 text-sm text-gray-700"
+                                        "block px-4 py-2 text-sm text-gray-700"
                                       )}
                                     >
                                       {item.name}
-                                    </a>
+                                    </Link>
                                   )}
                                 </Menu.Item>
                               ))}
