@@ -1,7 +1,7 @@
 import { Fragment, useState } from "react";
 import { Dialog, Menu, Transition } from "@headlessui/react";
 import { HomeIcon, Bars2Icon, XMarkIcon } from "@heroicons/react/24/outline";
-import ContactTables from "../../TechnicianDashboardComponents/ContactTables";
+import ServiceRequests from "../../../components/TechnicianDashboard/ServiceRequests";
 
 const navigation = [
   { name: "Dashboard", to: "#", icon: HomeIcon, current: true },
@@ -210,7 +210,7 @@ export default function TechnicianDashboard() {
               <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
                 <div className="py-4">
                   <div className="border-4 border-indigo-700 rounded-lg h-auto">
-                    <ContactTables />
+                    <ServiceRequests />
                   </div>
                 </div>
               </div>
