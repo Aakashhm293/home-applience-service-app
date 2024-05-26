@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.excel.homeas.dto.CustomerLoginDto;
 import com.excel.homeas.dto.CustomerRegistrationDto;
 import com.excel.homeas.response.Response;
 import com.excel.homeas.service.ApplicationService;
@@ -26,12 +27,12 @@ public class CustomerController {
 	private final ApplicationService applicationService;
 
 	@PostMapping("/save")
-	public ResponseEntity<Response<String>> registerCustomer(@RequestBody CustomerRegistrationDto dto) {
-		String savedCustomerDetials = applicationService.saveCustomerDetials(dto);
-		return ResponseEntity.status(HttpStatus.OK).body(Response.<String>builder()
+	public ResponseEntity<Response<Integer>> registerCustomer(@RequestBody CustomerRegistrationDto dto) {
+		Integer savedCustomerDetials = applicationService.saveCustomerDetials(dto);
+		return ResponseEntity.status(HttpStatus.OK).body(Response.<Integer>builder()
 				.data(savedCustomerDetials)
 				.isError(false)
-				.message("Inserted Successfully")
+				.message("Successfully Registered")
 				.build());
 	}
 	
@@ -59,6 +60,16 @@ public class CustomerController {
 	public ResponseEntity<Response<String>> deleteCustomerDetails(@RequestBody CustomerRegistrationDto dto){
 		applicationService.deleteCustomerDetails(dto);
 		return null;
+	}
+	
+	@PostMapping("/login")
+	public ResponseEntity<Response<Integer>> loginCustomer(@RequestBody CustomerLoginDto dto){
+		Integer login = applicationService.checkCustomerLogin(dto);
+		return ResponseEntity.status(HttpStatus.OK).body(Response.<Integer>builder()
+				.data(login)
+				.isError(false)
+				.message("Login was successful")
+				.build());		
 	}
 
 }

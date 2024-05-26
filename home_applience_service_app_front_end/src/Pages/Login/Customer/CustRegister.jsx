@@ -11,8 +11,9 @@ function classNames(...classes) {
 export default function CustRegister() {
   const [agreed, setAgreed] = useState(false);
 
-  const [user, setUser] = useState({});
+  const [user, setUser] = useState();
   const navigate = useNavigate();
+
   const registerUser = async (user) => {
     let res = await axios.post("http://localhost:8080/customer/save", user);
     if (res.data.data) {
@@ -234,13 +235,13 @@ export default function CustRegister() {
               </Switch.Group>
             </div>
             <div className="mt-10">
-              <Link
+              <button
                 type="button"
                 onClick={() => registerUser(user)}
                 className="block w-full rounded-md bg-indigo-600 px-3.5 py-2.5 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
               >
                 Register
-              </Link>
+              </button>
             </div>
           </form>
         </div>

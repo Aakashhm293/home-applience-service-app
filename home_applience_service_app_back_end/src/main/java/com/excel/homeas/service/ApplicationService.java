@@ -3,6 +3,7 @@ package com.excel.homeas.service;
 import java.util.List;
 
 import com.excel.homeas.dto.ApplienceDto;
+import com.excel.homeas.dto.CustomerLoginDto;
 import com.excel.homeas.dto.CustomerRegistrationDto;
 import com.excel.homeas.dto.ServiceRequestsDto;
 import com.excel.homeas.dto.TechnicianRegistrationDto;
@@ -12,7 +13,7 @@ public interface ApplicationService {
 	
 	//-----[ Customer ]-----
 
-	public String saveCustomerDetials(CustomerRegistrationDto dto);
+	public Integer saveCustomerDetials(CustomerRegistrationDto dto);
 
 	public CustomerRegistrationDto getAllCustomerDetails(CustomerRegistrationDto dto);
 
@@ -47,5 +48,7 @@ public interface ApplicationService {
 	public List<ServiceRequestsDto> getAllServiceRequests();
 
 	public Integer updateServiceReuestDetails(ServiceRequestsDto dto);
+
+	public Integer checkCustomerLogin(CustomerLoginDto dto);
 	
 }

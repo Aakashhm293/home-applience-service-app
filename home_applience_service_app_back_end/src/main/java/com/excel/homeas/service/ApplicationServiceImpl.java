@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 import org.springframework.stereotype.Service;
 
 import com.excel.homeas.dto.ApplienceDto;
+import com.excel.homeas.dto.CustomerLoginDto;
 import com.excel.homeas.dto.CustomerRegistrationDto;
 import com.excel.homeas.dto.ServiceRequestsDto;
 import com.excel.homeas.dto.TechnicianRegistrationDto;
@@ -40,7 +41,7 @@ public class ApplicationServiceImpl implements ApplicationService{
 	//----------------------------------------[ Customer ]----------------------------------------
 	
 	@Override
-	public String saveCustomerDetials(CustomerRegistrationDto dto) {
+	public Integer saveCustomerDetials(CustomerRegistrationDto dto) {
 		Customer customer = Customer.builder()
 		.customerFirstName(dto.getCustomerFirstName())
 		.customerLastName(dto.getCustomerLastName())
@@ -51,7 +52,7 @@ public class ApplicationServiceImpl implements ApplicationService{
 		.build();
 		
 		if(customerRepository.save(customer).getCustomerId()!=null) {
-			return "Inserted Successfully";
+			return 1;
 		} else {
 			throw new CustomerNotFound(ExceptionEnum.SOMETHINGWENTWRONG.getExcepEnumString());
 		}
@@ -118,6 +119,21 @@ public class ApplicationServiceImpl implements ApplicationService{
 			return "Successfully Deleted";
 		}
 		throw new CustomerNotFound(ExceptionEnum.CUSTOMERNOTFOUND.getExcepEnumString());
+	}
+	
+	@Override
+	public Integer checkCustomerLogin(CustomerLoginDto dto) {
+		Optional<Customer> optional = customerRepository.findByEmail(dto.getEmail());
+		if(optional.isPresent()) {
+			Customer customer = optional.get();
+			if(customer.getPassword().equals(dto.getPassword())) {
+				return 1;
+			} else {
+				return 0;
+			}
+		} else {
+			throw new CustomerNotFound(ExceptionEnum.CUSTOMERNOTFOUND.getExcepEnumString());
+		}
 	}
 	
 	//----------------------------------------[ Technician ]----------------------------------------
@@ -346,5 +362,4 @@ public class ApplicationServiceImpl implements ApplicationService{
 		}
 		return null;
 	}
-
 }
