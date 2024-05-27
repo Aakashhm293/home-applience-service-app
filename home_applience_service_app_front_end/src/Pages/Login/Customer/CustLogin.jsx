@@ -5,17 +5,23 @@ import { useState } from "react";
 import axios from "axios";
 
 export default function CustLogin() {
-  const [cred, setCred] = useState();
-
+  // const [cred, setCred] = useState();
+  const [email, setEmail] = useState();
+  const [password, setPassword] = useState();
   const navigate = useNavigate();
+  const userCred = [email, password];
 
   const loginUser = async (cred) => {
-    if (cred.email != null) {
-      let res = await axios.post("http://localhost:8080/customer/login", cred);
-      if (res.data.data) {
-        alert(res.data.message);
-        navigate("/custdashboard");
-      }
+    let res = await axios.post(
+      "http://localhost:8080/customer/login",
+      userCred
+    );
+
+    if (res.data.data != 0) {
+      alert("Login Successful");
+      navigate("/custdashboard");
+    } else {
+      alert("Login Failed");
     }
   };
 
@@ -57,9 +63,7 @@ export default function CustLogin() {
                     type="email"
                     autoComplete="email"
                     required
-                    onChange={(event) =>
-                      setCred({ ...cred, email: event.target.value })
-                    }
+                    onChange={(event) => setEmail(event.target.value)}
                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 p-3"
                   />
                 </div>
@@ -71,12 +75,7 @@ export default function CustLogin() {
                     id="password"
                     name="password"
                     type="password"
-                    onChange={(event) =>
-                      setCred({
-                        ...cred,
-                        password: event.target.value,
-                      })
-                    }
+                    onChange={(event) => setPassword(event.target.value)}
                     className="block text-sm font-medium leading-6 text-gray-900"
                   >
                     Password
@@ -101,7 +100,7 @@ export default function CustLogin() {
               <div>
                 <button
                   type="button"
-                  onClick={() => loginUser(cred)}
+                  onClick={() => loginUser()}
                   className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                 >
                   Log in

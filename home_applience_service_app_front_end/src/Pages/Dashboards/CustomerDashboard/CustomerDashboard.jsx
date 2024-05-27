@@ -3,12 +3,14 @@ import { Disclosure, Menu, Transition } from "@headlessui/react";
 import { BellIcon, Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import { Link } from "react-router-dom";
 import Products from "./Products";
-import image from "../../../images/customer.png";
+import image from "../../../images/logo.png";
+import { motion } from "framer-motion";
 
 const user = {
   name: "Tom Cook",
   email: "tom@example.com",
-  imageUrl: { image },
+  imageUrl:
+    "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
 };
 const navigation = [{ name: "Dashboard", to: "#", current: true }];
 const userNavigation = [{ name: "Sign out", to: "/" }];
@@ -30,7 +32,7 @@ export default function CustomerDashboard() {
           <div className="bg-gradient-to-r from-indigo-500 to-purple-500 pb-32">
             <Disclosure
               as="nav"
-              className="bg-indigo-600 border-b bg-gradient-to-r from-indigo-500 to-violet-500 border-opacity-25 lg:border-none"
+              className="bg-indigo-600 border-b bg-gradient-to-r from-indigo-400 to-violet-500 border-opacity-25 lg:border-none"
             >
               {({ open }) => (
                 <>
@@ -194,7 +196,7 @@ export default function CustomerDashboard() {
             <header className="py-10">
               <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <h1 className="text-3xl font-bold text-white">Welcome</h1>
-                <p className="text-black">
+                <p className="text-white">
                   Please Choose the service you wish to go for.
                 </p>
               </div>

@@ -35,9 +35,9 @@ public class CustomerController {
 				.message("Successfully Registered")
 				.build());
 	}
-	
+
 	@GetMapping("/get")
-	public ResponseEntity<Response<CustomerRegistrationDto>> getAllCustomers(@RequestBody CustomerRegistrationDto dto){
+	public ResponseEntity<Response<CustomerRegistrationDto>> getAllCustomers(@RequestBody CustomerRegistrationDto dto) {
 		CustomerRegistrationDto allCustomerDetails = applicationService.getAllCustomerDetails(dto);
 		return ResponseEntity.status(HttpStatus.OK).body(Response.<CustomerRegistrationDto>builder()
 				.data(allCustomerDetails)
@@ -45,9 +45,9 @@ public class CustomerController {
 				.message("Here Is the Customer Date")
 				.build());
 	}
-	
+
 	@PutMapping("/update")
-	public ResponseEntity<Response<String>> updateCustomerDetails(@RequestBody CustomerRegistrationDto dto){
+	public ResponseEntity<Response<String>> updateCustomerDetails(@RequestBody CustomerRegistrationDto dto) {
 		String updatedCustomerDetails = applicationService.updateCustomerDetails(dto);
 		return ResponseEntity.status(HttpStatus.OK).body(Response.<String>builder()
 				.data(updatedCustomerDetails)
@@ -55,21 +55,21 @@ public class CustomerController {
 				.message("Customer details are successfully updated")
 				.build());
 	}
-	
+
 	@DeleteMapping("/delete")
-	public ResponseEntity<Response<String>> deleteCustomerDetails(@RequestBody CustomerRegistrationDto dto){
+	public ResponseEntity<Response<String>> deleteCustomerDetails(@RequestBody CustomerRegistrationDto dto) {
 		applicationService.deleteCustomerDetails(dto);
 		return null;
 	}
-	
+
 	@PostMapping("/login")
-	public ResponseEntity<Response<Integer>> loginCustomer(@RequestBody CustomerLoginDto dto){
+	public ResponseEntity<Response<Integer>> loginCustomer(@RequestBody CustomerLoginDto dto) {
 		Integer login = applicationService.checkCustomerLogin(dto);
 		return ResponseEntity.status(HttpStatus.OK).body(Response.<Integer>builder()
 				.data(login)
 				.isError(false)
-				.message("Login was successful")
-				.build());		
+				.message("Done")
+				.build());
 	}
 
 }

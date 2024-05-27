@@ -28,105 +28,106 @@ import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 @Service
-public class ApplicationServiceImpl implements ApplicationService{
-	
+public class ApplicationServiceImpl implements ApplicationService {
+
 	private final CustomerRepository customerRepository;
-	
+
 	private final TechnicianRepository technicianRepository;
-	
+
 	private final ServiceRequestRepository serviceRequestRepository;
-	
+
 	private final ApplienceRepository applienceRepository;
 
-	//----------------------------------------[ Customer ]----------------------------------------
-	
+	// ----------------------------------------[ Customer
+	// ]----------------------------------------
+
 	@Override
 	public Integer saveCustomerDetials(CustomerRegistrationDto dto) {
 		Customer customer = Customer.builder()
-		.customerFirstName(dto.getCustomerFirstName())
-		.customerLastName(dto.getCustomerLastName())
-		.email(dto.getEmail())
-		.password(dto.getPassword())
-		.phoneNo(dto.getPhoneNo())
-		.address(dto.getAddress())
-		.build();
-		
-		if(customerRepository.save(customer).getCustomerId()!=null) {
+				.customerFirstName(dto.getCustomerFirstName())
+				.customerLastName(dto.getCustomerLastName())
+				.email(dto.getEmail())
+				.password(dto.getPassword())
+				.phoneNo(dto.getPhoneNo())
+				.address(dto.getAddress())
+				.build();
+
+		if (customerRepository.save(customer).getCustomerId() != null) {
 			return 1;
 		} else {
 			throw new CustomerNotFound(ExceptionEnum.SOMETHINGWENTWRONG.getExcepEnumString());
 		}
 	}
-	
+
 	@Override
 	public CustomerRegistrationDto getAllCustomerDetails(CustomerRegistrationDto dto) {
 		Optional<Customer> optional = customerRepository.findByEmail(dto.getEmail());
-		
-		if(optional.isPresent()) {
+
+		if (optional.isPresent()) {
 			Customer customer = optional.get();
-			
+
 			return CustomerRegistrationDto.builder()
-			.customerId(customer.getCustomerId())
-			.customerFirstName(customer.getCustomerFirstName())
-			.customerLastName(customer.getCustomerLastName())
-			.email(customer.getEmail())
-			.password(customer.getPassword())
-			.phoneNo(customer.getPhoneNo())
-			.address(customer.getAddress())
-			.build();
+					.customerId(customer.getCustomerId())
+					.customerFirstName(customer.getCustomerFirstName())
+					.customerLastName(customer.getCustomerLastName())
+					.email(customer.getEmail())
+					.password(customer.getPassword())
+					.phoneNo(customer.getPhoneNo())
+					.address(customer.getAddress())
+					.build();
 		} else {
 			throw new CustomerNotFound(ExceptionEnum.SOMETHINGWENTWRONG.getExcepEnumString());
 		}
-		
+
 	}
-	
+
 	@Override
 	public String updateCustomerDetails(CustomerRegistrationDto dto) {
 		Optional<Customer> optional = customerRepository.findByEmail(dto.getEmail());
-		
-		if(optional.isPresent()) {
+
+		if (optional.isPresent()) {
 			Customer customer = optional.get();
-			
+
 			Customer cust = Customer.builder()
-			.customerFirstName(dto.getCustomerFirstName())
-			.customerLastName(dto.getCustomerLastName())
-			.email(dto.getEmail())
-			.password(dto.getPassword())
-			.phoneNo(dto.getPhoneNo())
-			.address(dto.getAddress())
-			.build();
-			
+					.customerFirstName(dto.getCustomerFirstName())
+					.customerLastName(dto.getCustomerLastName())
+					.email(dto.getEmail())
+					.password(dto.getPassword())
+					.phoneNo(dto.getPhoneNo())
+					.address(dto.getAddress())
+					.build();
+
 			customer.setCustomerFirstName(cust.getCustomerFirstName());
 			customer.setCustomerLastName(cust.getCustomerLastName());
 			customer.setEmail(cust.getEmail());
 			customer.setPassword(cust.getPassword());
 			customer.setPhoneNo(cust.getPhoneNo());
 			customer.setAddress(cust.getAddress());
-			
+
 			return customerRepository.save(customer).getEmail();
 		}
-		
+
 		throw new CustomerNotFound(ExceptionEnum.SOMETHINGWENTWRONG.getExcepEnumString());
 	}
-	
+
 	@Override
 	public String deleteCustomerDetails(CustomerRegistrationDto dto) {
 		Optional<Customer> optional = customerRepository.findByEmail(dto.getEmail());
-		
-		if(optional.isPresent()) {
+
+		if (optional.isPresent()) {
 			Customer customer = optional.get();
 			customerRepository.delete(customer);
 			return "Successfully Deleted";
 		}
 		throw new CustomerNotFound(ExceptionEnum.CUSTOMERNOTFOUND.getExcepEnumString());
 	}
-	
+
 	@Override
 	public Integer checkCustomerLogin(CustomerLoginDto dto) {
 		Optional<Customer> optional = customerRepository.findByEmail(dto.getEmail());
-		if(optional.isPresent()) {
+		if (optional.isPresent()) {
 			Customer customer = optional.get();
-			if(customer.getPassword().equals(dto.getPassword())) {
+			if (customer.getPassword().equals(dto.getPassword())) {
 				return 1;
 			} else {
 				return 0;
@@ -135,67 +136,68 @@ public class ApplicationServiceImpl implements ApplicationService{
 			throw new CustomerNotFound(ExceptionEnum.CUSTOMERNOTFOUND.getExcepEnumString());
 		}
 	}
-	
-	//----------------------------------------[ Technician ]----------------------------------------
+
+	// ----------------------------------------[ Technician
+	// ]----------------------------------------
 
 	@Override
 	public Integer saveTechnicianDetials(TechnicianRegistrationDto dto) {
 		Technician technician = Technician.builder()
-		.technicianFirstName(dto.getTechnicianFirstName())
-		.technicianLastName(dto.getTechnicianLastName())
-		.email(dto.getEmail())
-		.password(dto.getPassword())
-		.phoneNo(dto.getPhoneNo())
-		.address(dto.getAddress())
-		.build();
-		
-		if(technicianRepository.save(technician).getTechnicianId() != null) {
+				.technicianFirstName(dto.getTechnicianFirstName())
+				.technicianLastName(dto.getTechnicianLastName())
+				.email(dto.getEmail())
+				.password(dto.getPassword())
+				.phoneNo(dto.getPhoneNo())
+				.address(dto.getAddress())
+				.build();
+
+		if (technicianRepository.save(technician).getTechnicianId() != null) {
 			return technician.getTechnicianId();
 		} else {
 			throw new TechnicianNotFound(ExceptionEnum.TECHNICIANNOTFOUND.getExcepEnumString());
 		}
 	}
-	
+
 	@Override
-	public TechnicianRegistrationDto getTechnicianDetails (TechnicianRegistrationDto dto) {
+	public TechnicianRegistrationDto getTechnicianDetails(TechnicianRegistrationDto dto) {
 		Optional<Technician> optional = technicianRepository.findByEmail(dto.getEmail());
-		
-		if(optional.isPresent()) {
+
+		if (optional.isPresent()) {
 			Technician technician = optional.get();
-			
+
 			return TechnicianRegistrationDto.builder()
-			.technicianId(technician.getTechnicianId())
-			.technicianFirstName(technician.getTechnicianFirstName())
-			.technicianLastName(technician.getTechnicianLastName())
-			.email(technician.getEmail())
-			.phoneNo(technician.getPhoneNo())
-			.address(technician.getAddress())
-			.status(technician.getStatus())
-			.build();
-			
+					.technicianId(technician.getTechnicianId())
+					.technicianFirstName(technician.getTechnicianFirstName())
+					.technicianLastName(technician.getTechnicianLastName())
+					.email(technician.getEmail())
+					.phoneNo(technician.getPhoneNo())
+					.address(technician.getAddress())
+					.status(technician.getStatus())
+					.build();
+
 		} else {
 			throw new TechnicianNotFound(ExceptionEnum.TECHNICIANNOTFOUND.getExcepEnumString());
 		}
-		
+
 	}
-	
+
 	@Override
 	public String updateTechnicianDetails(TechnicianRegistrationDto dto) {
 		Optional<Technician> optional = technicianRepository.findByEmail(dto.getEmail());
-		
-		if(optional.isPresent()) {
+
+		if (optional.isPresent()) {
 			Technician technician = optional.get();
-			
+
 			Technician techObj = Technician.builder()
-			.technicianFirstName(dto.getTechnicianFirstName())
-			.technicianLastName(dto.getTechnicianLastName())
-			.email(dto.getEmail())
-			.password(dto.getPassword())
-			.phoneNo(dto.getPhoneNo())
-			.address(dto.getAddress())
-			.status(dto.getStatus())
-			.build();
-			
+					.technicianFirstName(dto.getTechnicianFirstName())
+					.technicianLastName(dto.getTechnicianLastName())
+					.email(dto.getEmail())
+					.password(dto.getPassword())
+					.phoneNo(dto.getPhoneNo())
+					.address(dto.getAddress())
+					.status(dto.getStatus())
+					.build();
+
 			technician.setTechnicianFirstName(techObj.getTechnicianFirstName());
 			technician.setTechnicianLastName(techObj.getTechnicianLastName());
 			technician.setEmail(techObj.getEmail());
@@ -203,36 +205,37 @@ public class ApplicationServiceImpl implements ApplicationService{
 			technician.setPhoneNo(techObj.getPhoneNo());
 			technician.setAddress(techObj.getAddress());
 			technician.setStatus(techObj.getStatus());
-			
+
 			return technicianRepository.save(technician).getEmail();
-		}else {
+		} else {
 			throw new TechnicianNotFound(ExceptionEnum.TECHNICIANNOTFOUND.getExcepEnumString());
 		}
 	}
-	
+
 	@Override
 	public String deleteTechnicianDetails(TechnicianRegistrationDto dto) {
 		Optional<Technician> optional = technicianRepository.findByEmail(dto.getEmail());
-		
-		if(optional.isPresent()) {
+
+		if (optional.isPresent()) {
 			Technician technician = optional.get();
-			
+
 			technicianRepository.delete(technician);
-			
+
 			return "Successfully Deleted";
 		}
 		throw new CustomerNotFound(ExceptionEnum.TECHNICIANNOTFOUND.getExcepEnumString());
 	}
-	
-	//----------------------------------------[ Appliance ]----------------------------------------
+
+	// ----------------------------------------[ Appliance
+	// ]----------------------------------------
 
 	@Override
 	public Integer saveApplienceDetails(ApplienceDto dto) {
 		Optional<Customer> optional = customerRepository.findByEmail(dto.getEmail());
-		
-		if(optional.isPresent()) {
+
+		if (optional.isPresent()) {
 			Customer customer = optional.get();
-			
+
 			Applience applience = Applience.builder()
 					.applienceBrand(dto.getApplienceBrand())
 					.yearOfManufacturing(dto.getYearOfManufacturing())
@@ -240,85 +243,83 @@ public class ApplicationServiceImpl implements ApplicationService{
 					.serialNo(dto.getSerialNo())
 					.warrentyStatus(dto.getWarrentyStatus())
 					.build();
-			
+
 			customer.setApplience(applience);
 			applience.setCustomer(customer);
-			
+
 			return customerRepository.save(customer).getApplience().getApplienceId();
-		}else {
+		} else {
 			throw new ApplienceNotFound(ExceptionEnum.APPLIENCEDETAILSNOTFOUND);
 		}
 	}
-	
+
 	@Override
 	public List<Applience> getAllAppliences() {
-		
+
 		List<Applience> list = applienceRepository.findAll();
-		
-        if(list != null) {
-        	return list;
-        }
-		return null; 
-    }
-	
+
+		return list;
+	}
+
 	@Override
 	public Integer updateApplienceDetails(ApplienceDto dto) {
 		Optional<Applience> optional = applienceRepository.findByCustomerEmail(dto.getEmail());
-		
-		if(optional.isPresent()) {
+
+		if (optional.isPresent()) {
 			Applience applience = optional.get();
-			
+
 			Applience applienceObj = Applience.builder()
-			.applienceBrand(dto.getApplienceBrand())
-			.yearOfManufacturing(dto.getYearOfManufacturing())
-			.productType(dto.getProductType())
-			.serialNo(dto.getSerialNo())
-			.warrentyStatus(dto.getWarrentyStatus())
-			.build();
-			
+					.applienceBrand(dto.getApplienceBrand())
+					.yearOfManufacturing(dto.getYearOfManufacturing())
+					.productType(dto.getProductType())
+					.serialNo(dto.getSerialNo())
+					.warrentyStatus(dto.getWarrentyStatus())
+					.build();
+
 			applience.setApplienceBrand(applienceObj.getApplienceBrand());
 			applience.setYearOfManufacturing(applience.getYearOfManufacturing());
 			applience.setProductType(dto.getProductType());
 			applience.setSerialNo(applienceObj.getSerialNo());
 			applience.setWarrentyStatus(applience.getWarrentyStatus());
-			
+
 			return applienceRepository.save(applience).getApplienceId();
 		}
 		return null;
 	}
-	
+
 	@Override
 	public String deleteApplienceDetails(ApplienceDto dto) {
 		Optional<Applience> optional = applienceRepository.findByCustomerEmail(dto.getEmail());
-		
-		if(optional.isPresent()) {
+
+		if (optional.isPresent()) {
 			applienceRepository.delete(optional.get());
-			
+
 			return "Deleted successfully";
 		} else {
 			return "Failed to delete";
 		}
 	}
-	
-	//----------------------------------------[ Service ]----------------------------------------
+
+	// ----------------------------------------[ Service
+	// ]----------------------------------------
 
 	@Override
 	public String saveServiceRequest(ServiceRequestsDto dto) {
 		Optional<Customer> optional = customerRepository.findByEmail(dto.getEmail());
-		
-		if(optional.isPresent()) {
-			
+
+		if (optional.isPresent()) {
+
 			Customer customer = optional.get();
-			
-			if(customer.getServiceRequests() == null) {
+
+			if (customer.getServiceRequests() == null) {
 				ServiceRequests serviceRequests = ServiceRequests.builder()
-				.createdOn(dto.getCreatedOn())
-				.updatedOn(dto.getUpdatedOn())
-				.appointmentDate(dto.getAppointmentDate())
-				.serviceStatus(dto.getServiceStatus())
-				.comment(dto.getComment())
-				.build();
-				
+						.createdOn(dto.getCreatedOn())
+						.updatedOn(dto.getUpdatedOn())
+						.appointmentDate(dto.getAppointmentDate())
+						.serviceStatus(dto.getServiceStatus())
+						.comment(dto.getComment())
+						.build();
+
 				customer.setServiceRequests(serviceRequests);
 				customer.setEmail(dto.getEmail());
 				serviceRequests.setCustomer(customer);
@@ -341,21 +342,21 @@ public class ApplicationServiceImpl implements ApplicationService{
 				.comment(e.getComment())
 				.build()).collect(Collectors.toList());
 	}
-	
+
 	@Override
 	public Integer updateServiceReuestDetails(ServiceRequestsDto dto) {
 		Optional<Applience> optional = applienceRepository.findByCustomerEmail(dto.getEmail());
-		
-		if(optional.isPresent()) {
+
+		if (optional.isPresent()) {
 			Applience applience = optional.get();
 			ServiceRequests serviceRequests = ServiceRequests.builder()
-			.createdOn(dto.getCreatedOn())
-			.updatedOn(dto.getUpdatedOn())
-			.appointmentDate(dto.getAppointmentDate())
-			.serviceStatus(dto.getServiceStatus())
-			.comment(dto.getComment())
-			.build();
-			
+					.createdOn(dto.getCreatedOn())
+					.updatedOn(dto.getUpdatedOn())
+					.appointmentDate(dto.getAppointmentDate())
+					.serviceStatus(dto.getServiceStatus())
+					.comment(dto.getComment())
+					.build();
+
 			applience.setServiceRequests(serviceRequests);
 			serviceRequests.setApplience(applience);
 			return applienceRepository.save(applience).getApplienceId();
