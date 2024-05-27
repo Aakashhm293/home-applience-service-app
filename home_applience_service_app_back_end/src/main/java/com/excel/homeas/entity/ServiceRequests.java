@@ -26,24 +26,24 @@ import lombok.Setter;
 @NoArgsConstructor
 @Builder
 public class ServiceRequests {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer serviceId;
 	private LocalDate createdOn;
 	private LocalDate updatedOn;
 	private LocalDate appointmentDate;
-	
+
 	@Enumerated(EnumType.STRING)
 	private ServiceStatus serviceStatus;
 	private String comment;
-	
-	@OneToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+
+	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private Customer customer;
-	
-	@OneToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY,mappedBy = "serviceRequests")
+
+	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "serviceRequests")
 	private Technician technician;
-	
-	@OneToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY,mappedBy = "serviceRequests")
+
+	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "serviceRequests")
 	private Applience applience;
 }

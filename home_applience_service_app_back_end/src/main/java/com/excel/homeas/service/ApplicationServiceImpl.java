@@ -335,6 +335,7 @@ public class ApplicationServiceImpl implements ApplicationService {
 	public List<ServiceRequestsDto> getAllServiceRequests() {
 		return serviceRequestRepository.findAll().stream().map(e -> ServiceRequestsDto.builder()
 				.serviceId(e.getServiceId())
+				.email(e.getCustomer().getEmail())
 				.createdOn(e.getCreatedOn())
 				.updatedOn(e.getUpdatedOn())
 				.appointmentDate(e.getAppointmentDate())
