@@ -6,6 +6,7 @@ import com.excel.homeas.dto.ApplienceDto;
 import com.excel.homeas.dto.CustomerLoginDto;
 import com.excel.homeas.dto.CustomerRegistrationDto;
 import com.excel.homeas.dto.ServiceRequestsDto;
+import com.excel.homeas.dto.TechnicianLoginDto;
 import com.excel.homeas.dto.TechnicianRegistrationDto;
 import com.excel.homeas.entity.Applience;
 
@@ -21,9 +22,21 @@ public interface ApplicationService {
 
 	public String deleteCustomerDetails(CustomerRegistrationDto dto);
 
+	public Integer checkCustomerLogin(CustomerLoginDto dto);
+
+
+
+
+
+
+
+
+
+
+
 	// ------[ Technician ]-----
 
-	public Integer saveTechnicianDetials(TechnicianRegistrationDto dto);
+	public String saveTechnicianDetails(TechnicianRegistrationDto dto);
 
 	public TechnicianRegistrationDto getTechnicianDetails(TechnicianRegistrationDto dto);
 
@@ -31,15 +44,39 @@ public interface ApplicationService {
 
 	public String deleteTechnicianDetails(TechnicianRegistrationDto dto);
 
+	public Integer checkTechnicianLogin(TechnicianLoginDto dto);
+
+
+
+
+
+
+
+
+
+
+
+
 	// -----[ Appliance ]-----
 
 	public Integer saveApplienceDetails(ApplienceDto dto);
 
-	List<Applience> getAllAppliences();
+	List<ApplienceDto> getAllAppliences();
 
 	public Integer updateApplienceDetails(ApplienceDto dto);
 
 	public String deleteApplienceDetails(ApplienceDto dto);
+
+
+
+
+
+
+
+
+
+
+
 
 	// -----[ Service ]-----
 
@@ -48,7 +85,5 @@ public interface ApplicationService {
 	public List<ServiceRequestsDto> getAllServiceRequests();
 
 	public Integer updateServiceReuestDetails(ServiceRequestsDto dto);
-
-	public Integer checkCustomerLogin(CustomerLoginDto dto);
 
 }

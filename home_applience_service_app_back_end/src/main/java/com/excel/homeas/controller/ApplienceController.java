@@ -4,13 +4,7 @@ import java.util.List;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.excel.homeas.dto.ApplienceDto;
 import com.excel.homeas.entity.Applience;
@@ -22,32 +16,32 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/applience")
+@CrossOrigin
 public class ApplienceController {
 
-	private final ApplicationService applicationService;
+    private final ApplicationService applicationService;
 
-	@PostMapping("/save")
-	public ResponseEntity<Integer> saveApplienceInfo(@RequestBody ApplienceDto dto) {
-		Integer result = applicationService.saveApplienceDetails(dto);
-		return ResponseEntity.status(HttpStatus.OK).body(result);
-	}
+    @PostMapping("/save")
+    public ResponseEntity<Integer> saveApplienceInfo(@RequestBody ApplienceDto dto) {
+        Integer result = applicationService.saveApplienceDetails(dto);
+        return ResponseEntity.status(HttpStatus.OK).body(result);
+    }
 
-	@GetMapping("/get")
-	public ResponseEntity<List<Applience>> getAllAppliences() {
-		List<Applience> list = applicationService.getAllAppliences();
-		return ResponseEntity.status(HttpStatus.OK).body(list);
-	}
+    @GetMapping("/get")
+    public ResponseEntity<List<ApplienceDto>> getAllAppliences() {
+        List<ApplienceDto> list = applicationService.getAllAppliences();
+        return ResponseEntity.status(HttpStatus.OK).body(list);
+    }
 
-	@PutMapping("/update")
-	public ResponseEntity<Integer> updateApplienceDetails(@RequestBody ApplienceDto dto) {
-		Integer details = applicationService.updateApplienceDetails(dto);
-		return ResponseEntity.status(HttpStatus.OK).body(details);
-	}
+    @PutMapping("/update")
+    public ResponseEntity<Integer> updateApplienceDetails(@RequestBody ApplienceDto dto) {
+        Integer details = applicationService.updateApplienceDetails(dto);
+        return ResponseEntity.status(HttpStatus.OK).body(details);
+    }
 
-	@DeleteMapping("/delete")
-	public ResponseEntity<Response<String>> deleteApplienceDetails(@RequestBody ApplienceDto dto) {
-		String deleted = applicationService.deleteApplienceDetails(dto);
-		return ResponseEntity.status(HttpStatus.OK)
-				.body(Response.<String>builder().data(deleted).isError(false).message("Deleted Successfully").build());
-	}
+    @DeleteMapping("/delete")
+    public ResponseEntity<Response<String>> deleteApplienceDetails(@RequestBody ApplienceDto dto) {
+        String deleted = applicationService.deleteApplienceDetails(dto);
+        return ResponseEntity.status(HttpStatus.OK).body(Response.<String>builder().data(deleted).isError(false).message("Deleted Successfully").build());
+    }
 }

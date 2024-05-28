@@ -4,15 +4,15 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 
 export default function ProductDetails() {
-  const [fetchServiceRequests, setFetchServiceRequests] = useState([]);
+  const [fetchApplience, setFetchApplience] = useState([]);
   useEffect(() => {
     getReq();
   }, []);
 
   const getReq = () => {
     axios
-      .get("http://localhost:8080/service/all")
-      .then((res) => setFetchServiceRequests(res.data.data));
+      .get("http://localhost:8080/applience/get")
+      .then((res) => setFetchApplience(res.data));
   };
   return (
     <motion.div
@@ -38,47 +38,47 @@ export default function ProductDetails() {
                       scope="col"
                       className="px-6 py-3 text-left text-xs font-bold text-black tracking-wider"
                     >
-                      Created On
+                      Applience Brand
                     </th>
                     <th
                       scope="col"
                       className="px-6 py-3 text-left text-xs font-bold text-black tracking-wider"
                     >
-                      Updated On
+                      Year Of Manufacturing
                     </th>
                     <th
                       scope="col"
                       className="px-6 py-3 text-left text-xs font-bold text-black tracking-wider"
                     >
-                      Appointment Date
+                      Product Type
                     </th>
                     <th
                       scope="col"
                       className="px-6 py-3 text-left text-xs font-bold text-black tracking-wider"
                     >
-                      Service Status
+                      Serial NO
                     </th>
                     <th
                       scope="col"
                       className="px-6 py-3 text-left text-xs font-bold text-black tracking-wider"
                     >
-                      Comments
+                      Warrenty Status
                     </th>
                   </tr>
                 </thead>
                 <tbody className="bg-white divide-y divide-gray-200">
-                  {fetchServiceRequests.map((req) => {
+                  {fetchApplience.map((req) => {
                     return (
                       <tr
-                        key={req.serviceId}
+                        key={req.applienceId}
                         className="hover:bg-gray-100 transition duration-300"
                       >
                         <td className="py-2 px-4">{req.email}</td>
-                        <td className="py-2 px-4">{req.createdOn}</td>
-                        <td className="py-2 px-4">{req.updatedOn}</td>
-                        <td className="py-2 px-4">{req.appointmentDate}</td>
-                        <td className="py-2 px-4">{req.serviceStatus}</td>
-                        <td className="py-2 px-4">{req.comment}</td>
+                        <td className="py-2 px-4">{req.applienceBrand}</td>
+                        <td className="py-2 px-4">{req.yearOfManufacturing}</td>
+                        <td className="py-2 px-4">{req.productType}</td>
+                        <td className="py-2 px-4">{req.serialNo}</td>
+                        <td className="py-2 px-4">{req.warrentyStatus}</td>
                       </tr>
                     );
                   })}

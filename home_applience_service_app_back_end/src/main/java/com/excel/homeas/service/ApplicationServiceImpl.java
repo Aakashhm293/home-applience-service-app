@@ -10,6 +10,7 @@ import com.excel.homeas.dto.ApplienceDto;
 import com.excel.homeas.dto.CustomerLoginDto;
 import com.excel.homeas.dto.CustomerRegistrationDto;
 import com.excel.homeas.dto.ServiceRequestsDto;
+import com.excel.homeas.dto.TechnicianLoginDto;
 import com.excel.homeas.dto.TechnicianRegistrationDto;
 import com.excel.homeas.entity.Applience;
 import com.excel.homeas.entity.Customer;
@@ -38,8 +39,7 @@ public class ApplicationServiceImpl implements ApplicationService {
 
 	private final ApplienceRepository applienceRepository;
 
-	// ----------------------------------------[ Customer
-	// ]----------------------------------------
+	// ------------------------[ Customer ]----------------------------
 
 	@Override
 	public Integer saveCustomerDetials(CustomerRegistrationDto dto) {
@@ -137,11 +137,10 @@ public class ApplicationServiceImpl implements ApplicationService {
 		}
 	}
 
-	// ----------------------------------------[ Technician
-	// ]----------------------------------------
+	// ---------------------------------[ Technician ]------------------------------
 
 	@Override
-	public Integer saveTechnicianDetials(TechnicianRegistrationDto dto) {
+	public String saveTechnicianDetails(TechnicianRegistrationDto dto) {
 		Technician technician = Technician.builder()
 				.technicianFirstName(dto.getTechnicianFirstName())
 				.technicianLastName(dto.getTechnicianLastName())
@@ -149,13 +148,10 @@ public class ApplicationServiceImpl implements ApplicationService {
 				.password(dto.getPassword())
 				.phoneNo(dto.getPhoneNo())
 				.address(dto.getAddress())
+				.status(dto.getStatus())
 				.build();
 
-		if (technicianRepository.save(technician).getTechnicianId() != null) {
-			return technician.getTechnicianId();
-		} else {
-			throw new TechnicianNotFound(ExceptionEnum.TECHNICIANNOTFOUND.getExcepEnumString());
-		}
+        return technicianRepository.save(technician).getEmail();
 	}
 
 	@Override
@@ -226,8 +222,23 @@ public class ApplicationServiceImpl implements ApplicationService {
 		throw new CustomerNotFound(ExceptionEnum.TECHNICIANNOTFOUND.getExcepEnumString());
 	}
 
-	// ----------------------------------------[ Appliance
-	// ]----------------------------------------
+	@Override
+	public Integer checkTechnicianLogin(TechnicianLoginDto dto) {
+		Optional<Technician> optional = technicianRepository.findByEmail(dto.getEmail());
+
+		if (optional.isPresent()) {
+			Technician technician = optional.get();
+
+			if (technician.getPassword().equals(dto.getPassword())) {
+				return 1;
+			} else {
+				return 0;
+			}
+		}
+		throw new TechnicianNotFound(ExceptionEnum.TECHNICIANNOTFOUND.getExcepEnumString());
+	}
+
+	// -------------------[ Appliance ]------------------------
 
 	@Override
 	public Integer saveApplienceDetails(ApplienceDto dto) {
@@ -254,11 +265,17 @@ public class ApplicationServiceImpl implements ApplicationService {
 	}
 
 	@Override
-	public List<Applience> getAllAppliences() {
-
-		List<Applience> list = applienceRepository.findAll();
-
-		return list;
+	public List<ApplienceDto> getAllAppliences() {
+		return applienceRepository.findAll().stream()
+				.map(e -> ApplienceDto.builder()
+						.email(e.getCustomer().getEmail())
+						.applienceBrand(e.getApplienceBrand())
+						.yearOfManufacturing(e.getYearOfManufacturing())
+						.productType(e.getProductType())
+						.serialNo(e.getSerialNo())
+						.warrentyStatus(e.getWarrentyStatus())
+						.build())
+				.toList();
 	}
 
 	@Override
@@ -319,9 +336,7 @@ public class ApplicationServiceImpl implements ApplicationService {
 						.serviceStatus(dto.getServiceStatus())
 						.comment(dto.getComment())
 						.build();
-
 				customer.setServiceRequests(serviceRequests);
-				customer.setEmail(dto.getEmail());
 				serviceRequests.setCustomer(customer);
 				return customerRepository.save(customer).getEmail();
 			} else {
@@ -334,7 +349,6 @@ public class ApplicationServiceImpl implements ApplicationService {
 	@Override
 	public List<ServiceRequestsDto> getAllServiceRequests() {
 		return serviceRequestRepository.findAll().stream().map(e -> ServiceRequestsDto.builder()
-				.serviceId(e.getServiceId())
 				.email(e.getCustomer().getEmail())
 				.createdOn(e.getCreatedOn())
 				.updatedOn(e.getUpdatedOn())

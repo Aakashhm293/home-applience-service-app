@@ -42,8 +42,5 @@ public class ServiceRequests {
 	private Customer customer;
 
 	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "serviceRequests")
-	private Technician technician;
-
-	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "serviceRequests")
 	private Applience applience;
 }

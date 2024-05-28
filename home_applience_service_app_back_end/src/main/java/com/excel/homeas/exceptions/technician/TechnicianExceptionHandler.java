@@ -14,7 +14,7 @@ public class TechnicianExceptionHandler {
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Response.<String>builder()
 				.data(null)
 				.isError(true)
-				.message("Customer Not Found")
+				.message("Technician Not Found")
 				.build());
 	}
 }

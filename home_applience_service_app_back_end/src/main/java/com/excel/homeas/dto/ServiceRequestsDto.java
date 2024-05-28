@@ -17,7 +17,6 @@ import lombok.Setter;
 @Builder
 public class ServiceRequestsDto {
 
-	private Integer serviceId;
 	private String email;
 	private LocalDate createdOn;
 	private LocalDate updatedOn;
