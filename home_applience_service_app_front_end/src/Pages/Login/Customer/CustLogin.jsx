@@ -5,23 +5,27 @@ import { useState } from "react";
 import axios from "axios";
 
 export default function CustLogin() {
-  // const [cred, setCred] = useState();
-  const [email, setEmail] = useState();
-  const [password, setPassword] = useState();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const navigate = useNavigate();
-  const userCred = [email, password];
 
-  const loginUser = async (cred) => {
-    let res = await axios.post(
-      "http://localhost:8080/customer/login",
-      userCred
-    );
+  const loginUser = async () => {
+    try {
+      const res = await axios.post("http://localhost:8080/customer/login", {
+        email,
+        password,
+      });
 
-    if (res.data.data != 0) {
-      alert("Login Successful");
-      navigate("/custdashboard");
-    } else {
-      alert("Login Failed");
+      if (res.data.data === 1) {
+        alert("Login Successful");
+        navigate("/custdashboard");
+      } else {
+        alert("Login Failed");
+      }
+    } catch (error) {
+      console.error("Login Error:", error);
+
+      alert("Login Failed. Please try again.");
     }
   };
 
@@ -48,7 +52,7 @@ export default function CustLogin() {
           <div className="circlePosition w-[460px] h-[400px] bg-gradient-to-r from-violet-500 to-purple-500 rounded-[50%] absolute z-1 top-[50%] translate-x-[20px] opacity-30 blur-[34px] right-[10%]"></div>
 
           <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-            <form className="space-y-6" action="#" method="POST">
+            <form className="space-y-6">
               <div>
                 <label
                   htmlFor="email"
@@ -72,19 +76,11 @@ export default function CustLogin() {
               <div>
                 <div className="flex items-center justify-between">
                   <label
-                    id="password"
-                    name="password"
-                    type="password"
-                    onChange={(event) => setPassword(event.target.value)}
+                    htmlFor="password"
                     className="block text-sm font-medium leading-6 text-gray-900"
                   >
                     Password
                   </label>
-                  {/* <div className="text-sm">
-                    <Link className="font-semibold text-indigo-600 hover:text-indigo-500">
-                      Forgot password?
-                    </Link>
-                  </div> */}
                 </div>
                 <div className="mt-2">
                   <input
@@ -93,6 +89,7 @@ export default function CustLogin() {
                     type="password"
                     autoComplete="current-password"
                     required
+                    onChange={(event) => setPassword(event.target.value)}
                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 p-3"
                   />
                 </div>
@@ -100,7 +97,7 @@ export default function CustLogin() {
               <div>
                 <button
                   type="button"
-                  onClick={() => loginUser()}
+                  onClick={loginUser}
                   className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                 >
                   Log in

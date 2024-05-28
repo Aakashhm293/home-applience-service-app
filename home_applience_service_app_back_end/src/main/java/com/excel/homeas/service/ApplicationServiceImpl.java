@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import org.apache.tomcat.util.openssl.openssl_h;
 import org.springframework.stereotype.Service;
 
 import com.excel.homeas.dto.ApplienceDto;
@@ -11,6 +12,7 @@ import com.excel.homeas.dto.CustomerLoginDto;
 import com.excel.homeas.dto.CustomerRegistrationDto;
 import com.excel.homeas.dto.ServiceRequestsDto;
 import com.excel.homeas.dto.TechnicianRegistrationDto;
+import com.excel.homeas.dto.TecnicianLoginDto;
 import com.excel.homeas.entity.Applience;
 import com.excel.homeas.entity.Customer;
 import com.excel.homeas.entity.ServiceRequests;
@@ -166,7 +168,6 @@ public class ApplicationServiceImpl implements ApplicationService {
 			Technician technician = optional.get();
 
 			return TechnicianRegistrationDto.builder()
-					.technicianId(technician.getTechnicianId())
 					.technicianFirstName(technician.getTechnicianFirstName())
 					.technicianLastName(technician.getTechnicianLastName())
 					.email(technician.getEmail())
@@ -224,6 +225,25 @@ public class ApplicationServiceImpl implements ApplicationService {
 			return "Successfully Deleted";
 		}
 		throw new CustomerNotFound(ExceptionEnum.TECHNICIANNOTFOUND.getExcepEnumString());
+	}
+
+	
+	@Override
+	public Integer checkTechnicianLogin(TecnicianLoginDto dto) {
+		Optional<Technician> optional = technicianRepository.findByEmail(dto.getEmail());
+		if(optional.isPresent()) {
+			Technician technician = optional.get();
+			if(technician.getPassword().equals(dto.getPassword())) {
+				return 1 ;
+			}else {
+				return 0;
+			}
+		}else {
+			throw new TechnicianNotFound(ExceptionEnum.TECHNICIANNOTFOUND.getExcepEnumString());
+			
+		}
+	
+		
 	}
 
 	// ----------------------------------------[ Appliance
@@ -364,4 +384,6 @@ public class ApplicationServiceImpl implements ApplicationService {
 		}
 		return null;
 	}
+
+	
 }

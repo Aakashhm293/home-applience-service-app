@@ -14,7 +14,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @Builder
 public class TechnicianRegistrationDto {
-	private Integer technicianId;
+
 	private String technicianFirstName;
 	private String technicianLastName;
 	private String email;

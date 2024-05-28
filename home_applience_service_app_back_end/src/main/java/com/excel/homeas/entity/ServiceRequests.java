@@ -13,6 +13,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToOne;
+import jakarta.persistence.PreUpdate;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -33,6 +34,8 @@ public class ServiceRequests {
 	private LocalDate createdOn;
 	private LocalDate updatedOn;
 	private LocalDate appointmentDate;
+	
+	
 
 	@Enumerated(EnumType.STRING)
 	private ServiceStatus serviceStatus;
@@ -41,8 +44,8 @@ public class ServiceRequests {
 	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private Customer customer;
 
-	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "serviceRequests")
-	private Technician technician;
+//	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "serviceRequests")
+//	private Technician technician;
 
 	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "serviceRequests")
 	private Applience applience;

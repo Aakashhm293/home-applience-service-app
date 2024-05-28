@@ -7,6 +7,7 @@ import com.excel.homeas.dto.CustomerLoginDto;
 import com.excel.homeas.dto.CustomerRegistrationDto;
 import com.excel.homeas.dto.ServiceRequestsDto;
 import com.excel.homeas.dto.TechnicianRegistrationDto;
+import com.excel.homeas.dto.TecnicianLoginDto;
 import com.excel.homeas.entity.Applience;
 
 public interface ApplicationService {
@@ -30,7 +31,8 @@ public interface ApplicationService {
 	public String updateTechnicianDetails(TechnicianRegistrationDto dto);
 
 	public String deleteTechnicianDetails(TechnicianRegistrationDto dto);
-
+	
+	
 	// -----[ Appliance ]-----
 
 	public Integer saveApplienceDetails(ApplienceDto dto);
@@ -50,5 +52,9 @@ public interface ApplicationService {
 	public Integer updateServiceReuestDetails(ServiceRequestsDto dto);
 
 	public Integer checkCustomerLogin(CustomerLoginDto dto);
+	
+	public Integer checkTechnicianLogin(TecnicianLoginDto dto);
+
+	
 
 }

@@ -37,6 +37,6 @@ public class Technician {
 	@Enumerated(EnumType.STRING)
 	private Status status;
 	
-	@OneToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
-	private ServiceRequests serviceRequests;
+//	@OneToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY )
+//	private ServiceRequests serviceRequests;
 }
