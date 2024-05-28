@@ -1,17 +1,17 @@
 import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import TechnicianDashboard from "../Dashboards/TechnicianDashboard/TechnicianDashboard";
-import PageNotFound from "../PageNotFound/PageNotFound";
-import PricingPage from "../PricingPage/PricingPage";
-import AboutUs from "../AboutPage/AboutUs";
-import CustLogin from "../Login/CustomerLogin/CustLogin";
-import CustRegister from "../Login/CustomerLogin/CustRegister";
-import ServicePage from "../ServicesPage/ServicesPage";
-import UserSelection from "../Login/UserSelection/UserSelection";
-import TechnicianLogin from "../Login/TechnicianLogin/TechnicianLogin";
 import { AnimatePresence } from "framer-motion";
-import CustomerDashboard from "../Dashboards/CustomerDashboard/CustomerDashboard";
-import HomePage from "../HomePage/HomePage";
+import TechnicianDashboard from "../Pages/Dashboards/TechnicianDashboard/TechnicianDashboard";
+import PageNotFound from "../Pages/PageNotFound/PageNotFound";
+import PricingPage from "../Pages/PricingPage/PricingPage";
+import AboutUs from "../Pages/AboutPage/AboutUs";
+import CustLogin from "../Pages/Login/Customer/CustLogin";
+import CustRegister from "../Pages/Login/Customer/CustRegister";
+import ServicePage from "../Pages/ServicesPage/ServicesPage";
+import UserSelection from "../Pages/Login/UserSelection/UserSelection";
+import TechnicianLogin from "../Pages/Login/Technician/TechnicianLogin";
+import CustomerDashboard from "../Pages/Dashboards/CustomerDashboard/CustomerDashboard";
+import HomePage from "../Pages/HomePage/HomePage";
 
 function MainRouter() {
   return (

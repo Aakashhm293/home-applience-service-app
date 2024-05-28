@@ -11,16 +11,16 @@ function classNames(...classes) {
 export default function CustRegister() {
   const [agreed, setAgreed] = useState(false);
 
-  
-  const [user,setUser] = useState({});
+  const [user, setUser] = useState();
   const navigate = useNavigate();
-  const registerUser = async(user) => {
-    let res = await axios.post("http://localhost:8080/customer/save",user)
-    if(res.data.data){
-      alert(res.data.message)
-      navigate("/custdashboard")
+
+  const registerUser = async (user) => {
+    let res = await axios.post("http://localhost:8080/customer/save", user);
+    if (res.data.data) {
+      alert(res.data.message);
+      navigate("/custlogin");
     }
-  }
+  };
 
   return (
     <>
@@ -48,9 +48,7 @@ export default function CustRegister() {
               Customer Registration
             </h2>
           </div>
-          <form
-            className="mx-auto mt-16 max-w-xl sm:mt-20"
-          >
+          <form className="mx-auto mt-16 max-w-xl sm:mt-20">
             <div className="grid grid-cols-1 gap-x-8 gap-y-6 sm:grid-cols-2">
               <div>
                 <label
@@ -66,7 +64,12 @@ export default function CustRegister() {
                     id="first-name"
                     autoComplete="given-name"
                     placeholder="first name"
-                    onChange={(event)=>setUser({...user,customerFirstName:event.target.value})}
+                    onChange={(event) =>
+                      setUser({
+                        ...user,
+                        customerFirstName: event.target.value,
+                      })
+                    }
                     className="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                   />
                 </div>
@@ -85,7 +88,9 @@ export default function CustRegister() {
                     id="last-name"
                     placeholder="last name"
                     autoComplete="family-name"
-                    onChange={(event) => setUser({...user,customerLastName:event.target.value})}
+                    onChange={(event) =>
+                      setUser({ ...user, customerLastName: event.target.value })
+                    }
                     className="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                   />
                 </div>
@@ -104,7 +109,9 @@ export default function CustRegister() {
                     id="company"
                     placeholder="Email"
                     autoComplete="organization"
-                    onChange={(event) => setUser({...user,email:event.target.value})}
+                    onChange={(event) =>
+                      setUser({ ...user, email: event.target.value })
+                    }
                     className="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                   />
                 </div>
@@ -123,7 +130,9 @@ export default function CustRegister() {
                     id="password"
                     placeholder="Password"
                     autoComplete="organization"
-                    onChange={(event) =>setUser({...user,password:event.target.value})}
+                    onChange={(event) =>
+                      setUser({ ...user, password: event.target.value })
+                    }
                     className="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                   />
                 </div>
@@ -166,31 +175,38 @@ export default function CustRegister() {
                     name="phone-number"
                     id="phone-number"
                     autoComplete="tel"
-                    onChange={(event) =>setUser({...user,phoneNo:event.target.value})}
+                    onChange={(event) =>
+                      setUser({ ...user, phoneNo: event.target.value })
+                    }
                     className="block w-full rounded-md border-0 px-3.5 py-2 pl-20 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                   />
                 </div>
                 <div className="sm:col-span-2 mt-5">
-                <label
-                  htmlFor="company"
-                  className="block text-sm font-semibold leading-6 text-gray-900"
-                >
-                  Address
-                </label>
-                <div className="mt-2.5">
-                  <input
-                    type="Address"
-                    name="Address"
-                    id="company"
-                    placeholder="Address"
-                    autoComplete="organization"
-                    onChange={(event) =>setUser({...user,address:event.target.value})}
-                    className="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                  />
+                  <label
+                    htmlFor="company"
+                    className="block text-sm font-semibold leading-6 text-gray-900"
+                  >
+                    Address
+                  </label>
+                  <div className="mt-2.5">
+                    <input
+                      type="Address"
+                      name="Address"
+                      id="company"
+                      placeholder="Address"
+                      autoComplete="organization"
+                      onChange={(event) =>
+                        setUser({ ...user, address: event.target.value })
+                      }
+                      className="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                    />
+                  </div>
                 </div>
               </div>
-              </div>
-              <Switch.Group as="div" className="flex gap-x-4 sm:col-span-2 mt-5">
+              <Switch.Group
+                as="div"
+                className="flex gap-x-4 sm:col-span-2 mt-5"
+              >
                 <div className="flex h-6 items-center">
                   <Switch
                     checked={agreed}
@@ -219,13 +235,13 @@ export default function CustRegister() {
               </Switch.Group>
             </div>
             <div className="mt-10">
-              <Link
+              <button
                 type="button"
-                onClick={()=>registerUser(user)}
+                onClick={() => registerUser(user)}
                 className="block w-full rounded-md bg-indigo-600 px-3.5 py-2.5 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
               >
                 Register
-              </Link>
+              </button>
             </div>
           </form>
         </div>

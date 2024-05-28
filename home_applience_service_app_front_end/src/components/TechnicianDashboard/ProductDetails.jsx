@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import { useState } from "react";
 import { motion } from "framer-motion";
 
-export default function ServiceRequests() {
+export default function ProductDetails() {
   const [fetchServiceRequests, setFetchServiceRequests] = useState([]);
   useEffect(() => {
     getReq();

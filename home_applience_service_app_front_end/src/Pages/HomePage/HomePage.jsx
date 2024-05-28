@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
-import NavigationBar from "../../components/NavigationBar/NavigationBar";
 import { motion } from "framer-motion";
-import Footer from "../NavigationBar/Footer/Footer";
+import NavigationBar from "../../components/NavigationBar/NavigationBar";
+import Footer from "../../components/Footer/Footer";
 
 export default function HomePage() {
   return (

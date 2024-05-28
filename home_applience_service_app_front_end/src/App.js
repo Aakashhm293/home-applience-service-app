@@ -1,4 +1,4 @@
-import MainRouter from "./components/MainApplicationDriver/MainRouter";
+import MainRouter from "./service/MainRouter";
 
 function App() {
   return (
