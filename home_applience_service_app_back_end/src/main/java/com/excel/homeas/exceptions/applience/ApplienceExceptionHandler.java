@@ -10,7 +10,7 @@ import com.excel.homeas.response.Response;
 @RestControllerAdvice
 public class ApplienceExceptionHandler {
 
-	@ExceptionHandler(ApplienceNotFound.class)
+	@ExceptionHandler(ApplienceException.class)
 	public ResponseEntity<Response<String>> applienceNotFound(RuntimeException exp){
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Response.<String>builder()
 				.data(null)

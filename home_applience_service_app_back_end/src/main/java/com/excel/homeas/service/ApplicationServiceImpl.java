@@ -1,31 +1,25 @@
 package com.excel.homeas.service;
 
-import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
-
-import org.springframework.stereotype.Service;
-
-import com.excel.homeas.dto.ApplienceDto;
-import com.excel.homeas.dto.CustomerLoginDto;
-import com.excel.homeas.dto.CustomerRegistrationDto;
-import com.excel.homeas.dto.ServiceRequestsDto;
-import com.excel.homeas.dto.TechnicianLoginDto;
-import com.excel.homeas.dto.TechnicianRegistrationDto;
+import com.excel.homeas.constant.ApplicationConstants;
+import com.excel.homeas.dto.*;
 import com.excel.homeas.entity.Applience;
 import com.excel.homeas.entity.Customer;
 import com.excel.homeas.entity.ServiceRequests;
 import com.excel.homeas.entity.Technician;
-import com.excel.homeas.enums.forexception.ExceptionEnum;
-import com.excel.homeas.exceptions.applience.ApplienceNotFound;
-import com.excel.homeas.exceptions.customer.CustomerNotFound;
-import com.excel.homeas.exceptions.technician.TechnicianNotFound;
+import com.excel.homeas.exceptions.applience.ApplienceException;
+import com.excel.homeas.exceptions.customer.CustomerException;
+import com.excel.homeas.exceptions.servicerequest.ServiceRequestException;
+import com.excel.homeas.exceptions.technician.TechnicianException;
 import com.excel.homeas.repository.ApplienceRepository;
 import com.excel.homeas.repository.CustomerRepository;
 import com.excel.homeas.repository.ServiceRequestRepository;
 import com.excel.homeas.repository.TechnicianRepository;
-
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
@@ -43,21 +37,24 @@ public class ApplicationServiceImpl implements ApplicationService {
 
 	@Override
 	public Integer saveCustomerDetials(CustomerRegistrationDto dto) {
-		Customer customer = Customer.builder()
-				.customerFirstName(dto.getCustomerFirstName())
-				.customerLastName(dto.getCustomerLastName())
-				.email(dto.getEmail())
-				.password(dto.getPassword())
-				.phoneNo(dto.getPhoneNo())
-				.address(dto.getAddress())
-				.build();
+		Optional<Customer> optional = customerRepository.findByEmail(dto.getEmail());
 
-		if (customerRepository.save(customer).getCustomerId() != null) {
+		if(optional.isPresent()){
+			throw new CustomerException(ApplicationConstants.CUSTOMER_DETAILS_ALREADY_EXISTS);
+        } else {
+			Customer customer = Customer.builder()
+					.customerFirstName(dto.getCustomerFirstName())
+					.customerLastName(dto.getCustomerLastName())
+					.email(dto.getEmail())
+					.password(dto.getPassword())
+					.phoneNo(dto.getPhoneNo())
+					.address(dto.getAddress())
+					.build();
+
+			customerRepository.save(customer);
 			return 1;
-		} else {
-			throw new CustomerNotFound(ExceptionEnum.SOMETHINGWENTWRONG.getExcepEnumString());
 		}
-	}
+    }
 
 	@Override
 	public CustomerRegistrationDto getAllCustomerDetails(CustomerRegistrationDto dto) {
@@ -76,7 +73,7 @@ public class ApplicationServiceImpl implements ApplicationService {
 					.address(customer.getAddress())
 					.build();
 		} else {
-			throw new CustomerNotFound(ExceptionEnum.SOMETHINGWENTWRONG.getExcepEnumString());
+			throw new CustomerException(ApplicationConstants.NO_CUSTOMER_FOUND);
 		}
 
 	}
@@ -107,7 +104,7 @@ public class ApplicationServiceImpl implements ApplicationService {
 			return customerRepository.save(customer).getEmail();
 		}
 
-		throw new CustomerNotFound(ExceptionEnum.SOMETHINGWENTWRONG.getExcepEnumString());
+		throw new CustomerException(ApplicationConstants.CUSTOMER_NOT_REGISTERED);
 	}
 
 	@Override
@@ -119,7 +116,7 @@ public class ApplicationServiceImpl implements ApplicationService {
 			customerRepository.delete(customer);
 			return "Successfully Deleted";
 		}
-		throw new CustomerNotFound(ExceptionEnum.CUSTOMERNOTFOUND.getExcepEnumString());
+		throw new CustomerException(ApplicationConstants.CUSTOMER_NOT_FOUND);
 	}
 
 	@Override
@@ -133,7 +130,7 @@ public class ApplicationServiceImpl implements ApplicationService {
 				return 0;
 			}
 		} else {
-			throw new CustomerNotFound(ExceptionEnum.CUSTOMERNOTFOUND.getExcepEnumString());
+			throw new CustomerException(ApplicationConstants.CUSTOMER_NOT_FOUND);
 		}
 	}
 
@@ -141,6 +138,11 @@ public class ApplicationServiceImpl implements ApplicationService {
 
 	@Override
 	public String saveTechnicianDetails(TechnicianRegistrationDto dto) {
+		Optional<Technician> optional = technicianRepository.findByEmail(dto.getEmail());
+
+		if(optional.isPresent()){
+			throw new TechnicianException(ApplicationConstants.TECHNICIAN_DETAILS_ALREADY_EXISTS);
+		}
 		Technician technician = Technician.builder()
 				.technicianFirstName(dto.getTechnicianFirstName())
 				.technicianLastName(dto.getTechnicianLastName())
@@ -172,7 +174,7 @@ public class ApplicationServiceImpl implements ApplicationService {
 					.build();
 
 		} else {
-			throw new TechnicianNotFound(ExceptionEnum.TECHNICIANNOTFOUND.getExcepEnumString());
+			throw new TechnicianException(ApplicationConstants.NO_TECHNICIAN_FOUND);
 		}
 
 	}
@@ -204,7 +206,7 @@ public class ApplicationServiceImpl implements ApplicationService {
 
 			return technicianRepository.save(technician).getEmail();
 		} else {
-			throw new TechnicianNotFound(ExceptionEnum.TECHNICIANNOTFOUND.getExcepEnumString());
+			throw new TechnicianException(ApplicationConstants.TECHNICIAN_NOT_REGISTERED);
 		}
 	}
 
@@ -217,9 +219,10 @@ public class ApplicationServiceImpl implements ApplicationService {
 
 			technicianRepository.delete(technician);
 
-			return "Successfully Deleted";
+			return ApplicationConstants.DELETED_SUCCESSFULLY;
+		} else {
+			throw new TechnicianException(ApplicationConstants.TECHNICIAN_DETAILS_NOT_FOUND);
 		}
-		throw new CustomerNotFound(ExceptionEnum.TECHNICIANNOTFOUND.getExcepEnumString());
 	}
 
 	@Override
@@ -235,7 +238,7 @@ public class ApplicationServiceImpl implements ApplicationService {
 				return 0;
 			}
 		}
-		throw new TechnicianNotFound(ExceptionEnum.TECHNICIANNOTFOUND.getExcepEnumString());
+		throw new TechnicianException(ApplicationConstants.TECHNICIAN_NOT_REGISTERED);
 	}
 
 	// -------------------[ Appliance ]------------------------
@@ -244,25 +247,27 @@ public class ApplicationServiceImpl implements ApplicationService {
 	public Integer saveApplienceDetails(ApplienceDto dto) {
 		Optional<Customer> optional = customerRepository.findByEmail(dto.getEmail());
 
+
 		if (optional.isPresent()) {
 			Customer customer = optional.get();
 
-			Applience applience = Applience.builder()
-					.applienceBrand(dto.getApplienceBrand())
-					.yearOfManufacturing(dto.getYearOfManufacturing())
-					.productType(dto.getProductType())
-					.serialNo(dto.getSerialNo())
-					.warrentyStatus(dto.getWarrentyStatus())
-					.build();
+			if (customer.getApplience() == null) {
+				Applience applience = Applience.builder()
+						.applienceBrand(dto.getApplienceBrand())
+						.yearOfManufacturing(dto.getYearOfManufacturing())
+						.productType(dto.getProductType())
+						.serialNo(dto.getSerialNo())
+						.warrentyStatus(dto.getWarrentyStatus())
+						.build();
 
-			customer.setApplience(applience);
-			applience.setCustomer(customer);
-
-			return customerRepository.save(customer).getApplience().getApplienceId();
-		} else {
-			throw new ApplienceNotFound(ExceptionEnum.APPLIENCEDETAILSNOTFOUND);
+				customer.setApplience(applience);
+				applience.setCustomer(customer);
+			} else {
+				throw new ApplienceException(ApplicationConstants.APPLIANCE_ALREADY_EXISTS);
+			}
 		}
-	}
+        throw new ApplienceException(ApplicationConstants.APPLIANCE_ALREADY_EXISTS);
+    }
 
 	@Override
 	public List<ApplienceDto> getAllAppliences() {
@@ -301,7 +306,7 @@ public class ApplicationServiceImpl implements ApplicationService {
 
 			return applienceRepository.save(applience).getApplienceId();
 		}
-		return null;
+		throw new ApplienceException(ApplicationConstants.APPLIANCE_NOT_FOUND);
 	}
 
 	@Override
@@ -311,23 +316,20 @@ public class ApplicationServiceImpl implements ApplicationService {
 		if (optional.isPresent()) {
 			applienceRepository.delete(optional.get());
 
-			return "Deleted successfully";
+			return ApplicationConstants.DELETED_SUCCESSFULLY;
 		} else {
-			return "Failed to delete";
+			return ApplicationConstants.FAILED_TO_DELETE;
 		}
 	}
 
-	// ----------------------------------------[ Service
-	// ]----------------------------------------
+	// ------------------------[ Service ]-----------------------------
 
 	@Override
 	public String saveServiceRequest(ServiceRequestsDto dto) {
 		Optional<Customer> optional = customerRepository.findByEmail(dto.getEmail());
 
 		if (optional.isPresent()) {
-
 			Customer customer = optional.get();
-
 			if (customer.getServiceRequests() == null) {
 				ServiceRequests serviceRequests = ServiceRequests.builder()
 						.createdOn(dto.getCreatedOn())
@@ -340,7 +342,7 @@ public class ApplicationServiceImpl implements ApplicationService {
 				serviceRequests.setCustomer(customer);
 				return customerRepository.save(customer).getEmail();
 			} else {
-				return null;
+				return ApplicationConstants.SERVICE_REQUEST_NOT_FOUND;
 			}
 		}
 		return null;
@@ -359,7 +361,7 @@ public class ApplicationServiceImpl implements ApplicationService {
 	}
 
 	@Override
-	public Integer updateServiceReuestDetails(ServiceRequestsDto dto) {
+	public Integer updateServiceRequestDetails(ServiceRequestsDto dto) {
 		Optional<Applience> optional = applienceRepository.findByCustomerEmail(dto.getEmail());
 
 		if (optional.isPresent()) {
@@ -376,6 +378,6 @@ public class ApplicationServiceImpl implements ApplicationService {
 			serviceRequests.setApplience(applience);
 			return applienceRepository.save(applience).getApplienceId();
 		}
-		return null;
+		throw new ServiceRequestException(ApplicationConstants.SERVICE_REQUEST_NOT_FOUND);
 	}
 }

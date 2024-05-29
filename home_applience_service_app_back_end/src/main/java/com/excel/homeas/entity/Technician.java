@@ -1,6 +1,6 @@
 package com.excel.homeas.entity;
 
-import com.excel.homeas.enums.forentity.Status;
+import com.excel.homeas.enums.Status;
 import jakarta.persistence.*;
 import lombok.*;
 

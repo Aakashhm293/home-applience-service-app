@@ -1,16 +1,11 @@
 package com.excel.homeas.dto;
 
+import com.excel.homeas.enums.ApplianceBrand;
+import com.excel.homeas.enums.ProductType;
+import com.excel.homeas.enums.WarrentyStatus;
+import lombok.*;
+
 import java.time.LocalDate;
-
-import com.excel.homeas.enums.forentity.ApplienceBrand;
-import com.excel.homeas.enums.forentity.ProductType;
-import com.excel.homeas.enums.forentity.WarrentyStatus;
-
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 @Getter
 @Setter
@@ -20,7 +15,7 @@ import lombok.Setter;
 public class ApplienceDto {
 	
 	private String email;
-	private ApplienceBrand applienceBrand;
+	private ApplianceBrand applienceBrand;
 	private LocalDate yearOfManufacturing;
 	private ProductType productType;
 	private String serialNo;

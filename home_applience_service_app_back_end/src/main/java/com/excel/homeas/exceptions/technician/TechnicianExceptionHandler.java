@@ -9,7 +9,7 @@ import com.excel.homeas.response.Response;
 
 @RestControllerAdvice
 public class TechnicianExceptionHandler {
-	@ExceptionHandler(TechnicianNotFound.class)
+	@ExceptionHandler(TechnicianException.class)
 	public ResponseEntity<Response<String>> technicianNotFound(RuntimeException exp){
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Response.<String>builder()
 				.data(null)

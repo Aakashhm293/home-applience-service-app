@@ -43,8 +43,8 @@ public class ServiceRequestsController {
     }
 	
 	@PutMapping("/update")
-	public ResponseEntity<Response<Integer>> updateServiceReuestDetails(ServiceRequestsDto dto){
-		Integer updatedServiceRequestDetails = applicationService.updateServiceReuestDetails(dto);
+	public ResponseEntity<Response<Integer>> updateServiceRequestDetails(ServiceRequestsDto dto){
+		Integer updatedServiceRequestDetails = applicationService.updateServiceRequestDetails(dto);
 		return ResponseEntity.status(HttpStatus.OK).body(Response.<Integer>builder()
 				.data(updatedServiceRequestDetails)
 				.isError(false)

@@ -1,12 +1,7 @@
 package com.excel.homeas.dto;
 
-import com.excel.homeas.enums.forentity.Status;
-
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import com.excel.homeas.enums.Status;
+import lombok.*;
 
 @Getter
 @Setter

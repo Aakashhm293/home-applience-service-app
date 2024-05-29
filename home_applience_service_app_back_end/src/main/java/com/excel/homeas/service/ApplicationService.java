@@ -84,6 +84,6 @@ public interface ApplicationService {
 
 	public List<ServiceRequestsDto> getAllServiceRequests();
 
-	public Integer updateServiceReuestDetails(ServiceRequestsDto dto);
+	public Integer updateServiceRequestDetails(ServiceRequestsDto dto);
 
 }

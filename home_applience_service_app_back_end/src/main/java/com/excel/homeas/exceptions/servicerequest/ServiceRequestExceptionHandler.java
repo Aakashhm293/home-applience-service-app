@@ -9,7 +9,7 @@ import com.excel.homeas.response.Response;
 
 @RestControllerAdvice
 public class ServiceRequestExceptionHandler {
-	@ExceptionHandler(ServiceRequestNotFound.class)
+	@ExceptionHandler(ServiceRequestException.class)
 	public ResponseEntity<Response<String>> serviceRequestNotFound(RuntimeException exp){
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Response.<String>builder()
 				.data(null)
