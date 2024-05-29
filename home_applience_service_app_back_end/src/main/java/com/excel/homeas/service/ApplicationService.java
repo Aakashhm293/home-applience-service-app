@@ -51,5 +51,4 @@ public interface ApplicationService {
     public List<ServiceRequestsDto> getAllServiceRequests();
 
     public Integer updateServiceRequestDetails(ServiceRequestsDto dto);
-
 }

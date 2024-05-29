@@ -11,7 +11,7 @@ export default function ProductDetails() {
 
   const getReq = () => {
     axios
-      .get("http://localhost:8080/applience/get")
+      .get("http://localhost:8080/appliance/get")
       .then((res) => setFetchApplience(res.data));
   };
   return (
@@ -38,7 +38,7 @@ export default function ProductDetails() {
                       scope="col"
                       className="px-6 py-3 text-left text-xs font-bold text-black tracking-wider"
                     >
-                      Applience Brand
+                      Appliance Brand
                     </th>
                     <th
                       scope="col"
