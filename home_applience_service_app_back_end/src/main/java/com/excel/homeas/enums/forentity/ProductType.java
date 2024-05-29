@@ -6,9 +6,12 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 @Getter
 public enum ProductType {
-	AC("AC"),
+	FAN("FAN"),
+	AIRCONDITIONER("AIRCONDITIONER"),
 	WASHINGMACHINE("WASHINGMACHINE"),
-	TV("TV");
+	WIRELESSROUTER("WIRELESSROUTER"),
+	COFFEEDISPENSER("COFFEEDISPENSER"),
+	REFRIGERATOR("REFRIGERATOR");
 	
 	private final String productType;
 }
