@@ -12,10 +12,10 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class ApplienceDto {
+public class ApplianceDto {
 	
 	private String email;
-	private ApplianceBrand applienceBrand;
+	private ApplianceBrand applianceBrand;
 	private LocalDate yearOfManufacturing;
 	private ProductType productType;
 	private String serialNo;

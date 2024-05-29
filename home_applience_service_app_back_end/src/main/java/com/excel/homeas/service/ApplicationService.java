@@ -1,16 +1,13 @@
 package com.excel.homeas.service;
 
+import com.excel.homeas.dto.*;
+
 import java.util.List;
 
-import com.excel.homeas.dto.ApplienceDto;
-import com.excel.homeas.dto.CustomerLoginDto;
-import com.excel.homeas.dto.CustomerRegistrationDto;
-import com.excel.homeas.dto.ServiceRequestsDto;
-import com.excel.homeas.dto.TechnicianLoginDto;
-import com.excel.homeas.dto.TechnicianRegistrationDto;
-import com.excel.homeas.entity.Applience;
-
 public interface ApplicationService {
+
+
+
 
 	// -----[ Customer ]-----
 
@@ -23,14 +20,6 @@ public interface ApplicationService {
 	public String deleteCustomerDetails(CustomerRegistrationDto dto);
 
 	public Integer checkCustomerLogin(CustomerLoginDto dto);
-
-
-
-
-
-
-
-
 
 
 
@@ -49,32 +38,15 @@ public interface ApplicationService {
 
 
 
-
-
-
-
-
-
-
-
 	// -----[ Appliance ]-----
 
-	public Integer saveApplienceDetails(ApplienceDto dto);
+	public Integer saveApplianceDetails(ApplianceDto dto);
 
-	List<ApplienceDto> getAllAppliences();
+	List<ApplianceDto> getAllAppliances();
 
-	public Integer updateApplienceDetails(ApplienceDto dto);
+	public Integer updateApplianceDetails(ApplianceDto dto);
 
-	public String deleteApplienceDetails(ApplienceDto dto);
-
-
-
-
-
-
-
-
-
+	public String deleteApplianceDetails(ApplianceDto dto);
 
 
 

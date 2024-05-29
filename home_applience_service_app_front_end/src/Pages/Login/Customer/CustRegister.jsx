@@ -115,38 +115,29 @@ export default function CustRegister() {
                     className="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                   />
                 </div>
-              </div>
-              <div>
-                <label
-                  htmlFor="password"
-                  className="block text-sm font-semibold leading-6 text-gray-900"
-                >
-                  Password
-                </label>
-                <div className="mt-2.5 ">
-                  <input
-                    type="password"
-                    name="password"
-                    id="password"
-                    placeholder="Password"
-                    autoComplete="organization"
-                    onChange={(event) =>
-                      setUser({ ...user, password: event.target.value })
-                    }
-                    className="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                  />
-                </div>
-                <div className="mt-2.5">
-                  <input
-                    type="password"
-                    name="confpassword"
-                    id="password"
-                    placeholder="Confirm your password"
-                    autoComplete="organization"
-                    className="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                  />
+                <div>
+                  <label
+                    htmlFor="password"
+                    className="block text-sm font-semibold leading-6 text-gray-900 py-5"
+                  >
+                    Password
+                  </label>
+                  <div className="mt-2.5 ">
+                    <input
+                      type="password"
+                      name="password"
+                      id="password"
+                      placeholder="Password"
+                      autoComplete="organization"
+                      onChange={(event) =>
+                        setUser({ ...user, password: event.target.value })
+                      }
+                      className="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                    />
+                  </div>
                 </div>
               </div>
+
               <div className="sm:col-span-2">
                 <label
                   htmlFor="phone-number"

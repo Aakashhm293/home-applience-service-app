@@ -31,7 +31,7 @@ public class Customer {
 	private String address;
 	
 	@OneToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY,mappedBy = "customer")
-	private Applience applience;
+	private Appliance appliance;
 	
 	@OneToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY,mappedBy = "customer")
 	private ServiceRequests serviceRequests;

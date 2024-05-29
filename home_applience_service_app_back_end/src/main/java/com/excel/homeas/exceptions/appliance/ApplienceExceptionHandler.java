@@ -1,4 +1,4 @@
-package com.excel.homeas.exceptions.applience;
+package com.excel.homeas.exceptions.appliance;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -10,12 +10,11 @@ import com.excel.homeas.response.Response;
 @RestControllerAdvice
 public class ApplienceExceptionHandler {
 
-	@ExceptionHandler(ApplienceException.class)
+	@ExceptionHandler(ApplianceException.class)
 	public ResponseEntity<Response<String>> applienceNotFound(RuntimeException exp){
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Response.<String>builder()
 				.data(null)
 				.isError(true)
-				.message("Applience Not Found")
 				.build());
 	}
 }

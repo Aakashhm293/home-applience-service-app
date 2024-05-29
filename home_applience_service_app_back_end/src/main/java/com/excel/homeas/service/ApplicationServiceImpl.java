@@ -2,15 +2,15 @@ package com.excel.homeas.service;
 
 import com.excel.homeas.constant.ApplicationConstants;
 import com.excel.homeas.dto.*;
-import com.excel.homeas.entity.Applience;
+import com.excel.homeas.entity.Appliance;
 import com.excel.homeas.entity.Customer;
 import com.excel.homeas.entity.ServiceRequests;
 import com.excel.homeas.entity.Technician;
-import com.excel.homeas.exceptions.applience.ApplienceException;
+import com.excel.homeas.exceptions.appliance.ApplianceException;
 import com.excel.homeas.exceptions.customer.CustomerException;
 import com.excel.homeas.exceptions.servicerequest.ServiceRequestException;
 import com.excel.homeas.exceptions.technician.TechnicianException;
-import com.excel.homeas.repository.ApplienceRepository;
+import com.excel.homeas.repository.ApplianceRepository;
 import com.excel.homeas.repository.CustomerRepository;
 import com.excel.homeas.repository.ServiceRequestRepository;
 import com.excel.homeas.repository.TechnicianRepository;
@@ -31,7 +31,7 @@ public class ApplicationServiceImpl implements ApplicationService {
 
 	private final ServiceRequestRepository serviceRequestRepository;
 
-	private final ApplienceRepository applienceRepository;
+	private final ApplianceRepository applianceRepository;
 
 	// ------------------------[ Customer ]----------------------------
 
@@ -85,7 +85,7 @@ public class ApplicationServiceImpl implements ApplicationService {
 		if (optional.isPresent()) {
 			Customer customer = optional.get();
 
-			Customer cust = Customer.builder()
+			Customer customer1 = Customer.builder()
 					.customerFirstName(dto.getCustomerFirstName())
 					.customerLastName(dto.getCustomerLastName())
 					.email(dto.getEmail())
@@ -94,12 +94,12 @@ public class ApplicationServiceImpl implements ApplicationService {
 					.address(dto.getAddress())
 					.build();
 
-			customer.setCustomerFirstName(cust.getCustomerFirstName());
-			customer.setCustomerLastName(cust.getCustomerLastName());
-			customer.setEmail(cust.getEmail());
-			customer.setPassword(cust.getPassword());
-			customer.setPhoneNo(cust.getPhoneNo());
-			customer.setAddress(cust.getAddress());
+			customer.setCustomerFirstName(customer1.getCustomerFirstName());
+			customer.setCustomerLastName(customer1.getCustomerLastName());
+			customer.setEmail(customer1.getEmail());
+			customer.setPassword(customer1.getPassword());
+			customer.setPhoneNo(customer1.getPhoneNo());
+			customer.setAddress(customer1.getAddress());
 
 			return customerRepository.save(customer).getEmail();
 		}
@@ -244,37 +244,37 @@ public class ApplicationServiceImpl implements ApplicationService {
 	// -------------------[ Appliance ]------------------------
 
 	@Override
-	public Integer saveApplienceDetails(ApplienceDto dto) {
+	public Integer saveApplianceDetails(ApplianceDto dto) {
 		Optional<Customer> optional = customerRepository.findByEmail(dto.getEmail());
-
 
 		if (optional.isPresent()) {
 			Customer customer = optional.get();
 
-			if (customer.getApplience() == null) {
-				Applience applience = Applience.builder()
-						.applienceBrand(dto.getApplienceBrand())
-						.yearOfManufacturing(dto.getYearOfManufacturing())
-						.productType(dto.getProductType())
-						.serialNo(dto.getSerialNo())
-						.warrentyStatus(dto.getWarrentyStatus())
-						.build();
+			Appliance appliance = Appliance.builder()
+					.applianceBrand(dto.getApplianceBrand())
+					.yearOfManufacturing(dto.getYearOfManufacturing())
+					.productType(dto.getProductType())
+					.serialNo(dto.getSerialNo())
+					.warrentyStatus(dto.getWarrentyStatus())
+					.build();
 
-				customer.setApplience(applience);
-				applience.setCustomer(customer);
-			} else {
-				throw new ApplienceException(ApplicationConstants.APPLIANCE_ALREADY_EXISTS);
-			}
+			customer.setAppliance(appliance);
+			appliance.setCustomer(customer);
+
+			applianceRepository.save(appliance);
+			return 1;
 		}
-        throw new ApplienceException(ApplicationConstants.APPLIANCE_ALREADY_EXISTS);
+		else {
+			throw new ApplianceException(ApplicationConstants.APPLIANCE_ALREADY_EXISTS);
+		}
     }
 
 	@Override
-	public List<ApplienceDto> getAllAppliences() {
-		return applienceRepository.findAll().stream()
-				.map(e -> ApplienceDto.builder()
+	public List<ApplianceDto> getAllAppliances() {
+		return applianceRepository.findAll().stream()
+				.map(e -> ApplianceDto.builder()
 						.email(e.getCustomer().getEmail())
-						.applienceBrand(e.getApplienceBrand())
+						.applianceBrand(e.getApplianceBrand())
 						.yearOfManufacturing(e.getYearOfManufacturing())
 						.productType(e.getProductType())
 						.serialNo(e.getSerialNo())
@@ -284,37 +284,37 @@ public class ApplicationServiceImpl implements ApplicationService {
 	}
 
 	@Override
-	public Integer updateApplienceDetails(ApplienceDto dto) {
-		Optional<Applience> optional = applienceRepository.findByCustomerEmail(dto.getEmail());
+	public Integer updateApplianceDetails(ApplianceDto dto) {
+		Optional<Appliance> optional = applianceRepository.findByCustomerEmail(dto.getEmail());
 
 		if (optional.isPresent()) {
-			Applience applience = optional.get();
+			Appliance appliance = optional.get();
 
-			Applience applienceObj = Applience.builder()
-					.applienceBrand(dto.getApplienceBrand())
+			Appliance applianceObj = Appliance.builder()
+					.applianceBrand(dto.getApplianceBrand())
 					.yearOfManufacturing(dto.getYearOfManufacturing())
 					.productType(dto.getProductType())
 					.serialNo(dto.getSerialNo())
 					.warrentyStatus(dto.getWarrentyStatus())
 					.build();
 
-			applience.setApplienceBrand(applienceObj.getApplienceBrand());
-			applience.setYearOfManufacturing(applience.getYearOfManufacturing());
-			applience.setProductType(dto.getProductType());
-			applience.setSerialNo(applienceObj.getSerialNo());
-			applience.setWarrentyStatus(applience.getWarrentyStatus());
+			appliance.setApplianceBrand(applianceObj.getApplianceBrand());
+			appliance.setYearOfManufacturing(appliance.getYearOfManufacturing());
+			appliance.setProductType(dto.getProductType());
+			appliance.setSerialNo(applianceObj.getSerialNo());
+			appliance.setWarrentyStatus(appliance.getWarrentyStatus());
 
-			return applienceRepository.save(applience).getApplienceId();
+			return applianceRepository.save(appliance).getApplianceId();
 		}
-		throw new ApplienceException(ApplicationConstants.APPLIANCE_NOT_FOUND);
+		throw new ApplianceException(ApplicationConstants.APPLIANCE_NOT_FOUND);
 	}
 
 	@Override
-	public String deleteApplienceDetails(ApplienceDto dto) {
-		Optional<Applience> optional = applienceRepository.findByCustomerEmail(dto.getEmail());
+	public String deleteApplianceDetails(ApplianceDto dto) {
+		Optional<Appliance> optional = applianceRepository.findByCustomerEmail(dto.getEmail());
 
 		if (optional.isPresent()) {
-			applienceRepository.delete(optional.get());
+			applianceRepository.delete(optional.get());
 
 			return ApplicationConstants.DELETED_SUCCESSFULLY;
 		} else {
@@ -362,10 +362,10 @@ public class ApplicationServiceImpl implements ApplicationService {
 
 	@Override
 	public Integer updateServiceRequestDetails(ServiceRequestsDto dto) {
-		Optional<Applience> optional = applienceRepository.findByCustomerEmail(dto.getEmail());
+		Optional<Appliance> optional = applianceRepository.findByCustomerEmail(dto.getEmail());
 
 		if (optional.isPresent()) {
-			Applience applience = optional.get();
+			Appliance appliance = optional.get();
 			ServiceRequests serviceRequests = ServiceRequests.builder()
 					.createdOn(dto.getCreatedOn())
 					.updatedOn(dto.getUpdatedOn())
@@ -374,9 +374,9 @@ public class ApplicationServiceImpl implements ApplicationService {
 					.comment(dto.getComment())
 					.build();
 
-			applience.setServiceRequests(serviceRequests);
-			serviceRequests.setApplience(applience);
-			return applienceRepository.save(applience).getApplienceId();
+			appliance.setServiceRequests(serviceRequests);
+			serviceRequests.setAppliance(appliance);
+			return applianceRepository.save(appliance).getApplianceId();
 		}
 		throw new ServiceRequestException(ApplicationConstants.SERVICE_REQUEST_NOT_FOUND);
 	}

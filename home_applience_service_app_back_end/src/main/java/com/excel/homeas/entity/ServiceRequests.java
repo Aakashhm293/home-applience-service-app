@@ -36,11 +36,11 @@ public class ServiceRequests {
 	@Column(name = "comments")
 	private String comment;
 
-	@PrimaryKeyJoinColumn(name = "customer_id")
+	@JoinColumn(name = "customer_id")
 	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private Customer customer;
 
-	@PrimaryKeyJoinColumn(name = "appliance_id")
-	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	private Applience applience;
+	@JoinColumn(name = "appliance_id")
+	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	private Appliance appliance;
 }

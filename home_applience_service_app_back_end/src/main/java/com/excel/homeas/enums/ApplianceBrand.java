@@ -8,7 +8,11 @@ import lombok.RequiredArgsConstructor;
 public enum ApplianceBrand {
     LG("LG"),
     SONY("SONY"),
+    DLINK("DLINK"),
+    TPLINK("TPLINK"),
+    SAMSUNG("SAMSUNG"),
+    TOSHIBA("TOSHIBA"),
     BOSCH("BOSCH");
 
-    private final String applienceBrand;
+    private final String applianceBrand;
 }

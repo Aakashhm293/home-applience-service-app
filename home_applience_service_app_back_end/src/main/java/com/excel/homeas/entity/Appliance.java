@@ -15,15 +15,16 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @Builder
 @Table(name = "appliances")
-public class Applience {
+public class Appliance {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "appliance_id")
-	private Integer applienceId;
+	private Integer applianceId;
 
 	@Column(name = "appliance_brand")
+
 	@Enumerated(EnumType.STRING)
-	private ApplianceBrand applienceBrand;
+	private ApplianceBrand applianceBrand;
 
 	@Column(name = "year_of_manufacturing")
 	private LocalDate yearOfManufacturing;
@@ -39,11 +40,11 @@ public class Applience {
 	@Enumerated(EnumType.STRING)
 	private WarrentyStatus warrentyStatus;
 
-	@PrimaryKeyJoinColumn(name = "customer_id")
+	@JoinColumn(name = "customer_id")
 	@OneToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
 	private Customer customer;
 
-	@PrimaryKeyJoinColumn(name = "service_requests_id")
-	@OneToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY, mappedBy = "applience")
+
+	@OneToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY, mappedBy = "appliance")
 	private ServiceRequests serviceRequests;
 }
