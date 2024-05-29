@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import Modal from "react-modal";
+import axios from "axios";
 
 const customStyles = {
   content: {
@@ -26,6 +27,25 @@ const Products = () => {
     serialNo: "",
     warrantyStatus: "",
   });
+
+  // Define options for select dropdowns
+  const applianceBrandOptions = ["LG", "SONY", "Brand C"];
+  const yearOptions = [
+    "2024-01-01",
+    "2023-01-01",
+    "2022-01-01",
+    "2021-01-01",
+    "2020-01-01",
+  ];
+  const productTypeOptions = [
+    "FAN",
+    "AIRCONDITIONER",
+    "WASHINGMACHINE",
+    "WIRELESSROUTER",
+    "COFFEEDISPENSER",
+    "REFRIGERATOR",
+  ];
+  const warrantyOptions = ["OUTOFWARRENTY", "UNDERWARRENTY"];
 
   const products = [
     {
@@ -92,11 +112,18 @@ const Products = () => {
     setFormData({ ...formData, [name]: value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Here you can handle form submission, e.g., send data to server
-    console.log("Form submitted:", formData);
-    closeModal();
+    try {
+      const response = await axios.post(
+        "http://localhost:8080/applience/save",
+        formData
+      );
+      alert("Form submitted successfully:", response.data);
+      closeModal();
+    } catch (error) {
+      console.error("Error submitting form:", error);
+    }
   };
 
   return (
@@ -157,44 +184,61 @@ const Products = () => {
             <label htmlFor="applianceBrand" className="block mb-1">
               Appliance Brand
             </label>
-            <input
-              type="text"
+            <select
               id="applianceBrand"
               name="applianceBrand"
               value={formData.applianceBrand}
               onChange={handleInputChange}
               className="w-full px-4 py-2 border rounded-md focus:outline-none focus:border-indigo-500"
               required
-            />
+            >
+              <option value="">Select Brand</option>
+              {applianceBrandOptions.map((option) => (
+                <option key={option} value={option}>
+                  {option}
+                </option>
+              ))}
+            </select>
           </div>
           <div className="mb-4">
             <label htmlFor="yearOfManufacturing" className="block mb-1">
               Year of Manufacturing
             </label>
-            <input
-              type="text"
+            <select
               id="yearOfManufacturing"
               name="yearOfManufacturing"
               value={formData.yearOfManufacturing}
               onChange={handleInputChange}
               className="w-full px-4 py-2 border rounded-md focus:outline-none focus:border-indigo-500"
               required
-            />
+            >
+              <option value="">Select Year</option>
+              {yearOptions.map((option) => (
+                <option key={option} value={option}>
+                  {option}
+                </option>
+              ))}
+            </select>
           </div>
           <div className="mb-4">
             <label htmlFor="productType" className="block mb-1">
               Product Type
             </label>
-            <input
-              type="text"
+            <select
               id="productType"
               name="productType"
-              value={selectedProduct ? selectedProduct.name : ""}
+              value={formData.productType}
               onChange={handleInputChange}
               className="w-full px-4 py-2 border rounded-md focus:outline-none focus:border-indigo-500"
-              disabled // Disable the input field
               required
-            />
+            >
+              <option value="">Select Product Type</option>
+              {productTypeOptions.map((option) => (
+                <option key={option} value={option}>
+                  {option}
+                </option>
+              ))}
+            </select>
           </div>
           <div className="mb-4">
             <label htmlFor="serialNo" className="block mb-1">
@@ -214,15 +258,21 @@ const Products = () => {
             <label htmlFor="warrantyStatus" className="block mb-1">
               Warranty Status
             </label>
-            <input
-              type="text"
+            <select
               id="warrantyStatus"
               name="warrantyStatus"
               value={formData.warrantyStatus}
               onChange={handleInputChange}
               className="w-full px-4 py-2 border rounded-md focus:outline-none focus:border-indigo-500"
               required
-            />
+            >
+              <option value="">Select Warranty Status</option>
+              {warrantyOptions.map((option) => (
+                <option key={option} value={option}>
+                  {option}
+                </option>
+              ))}
+            </select>
           </div>
           <div className="text-center">
             <button
