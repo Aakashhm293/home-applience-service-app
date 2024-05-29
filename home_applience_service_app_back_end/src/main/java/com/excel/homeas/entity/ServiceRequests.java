@@ -14,33 +14,33 @@ import java.time.LocalDate;
 @Builder
 public class ServiceRequests {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
 
-	@Column(name = "service_id")
-	private Integer serviceId;
+    @Column(name = "service_id")
+    private Integer serviceId;
 
-	@Column(name = "created_on")
-	private LocalDate createdOn;
+    @Column(name = "created_on")
+    private LocalDate createdOn;
 
-	@Column(name = "updated_on")
-	private LocalDate updatedOn;
+    @Column(name = "updated_on")
+    private LocalDate updatedOn;
 
-	@Column(name = "appointment_date")
-	private LocalDate appointmentDate;
+    @Column(name = "appointment_date")
+    private LocalDate appointmentDate;
 
-	@Enumerated(EnumType.STRING)
-	@Column(name = "service_status")
-	private ServiceStatus serviceStatus;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "service_status")
+    private ServiceStatus serviceStatus;
 
-	@Column(name = "comments")
-	private String comment;
+    @Column(name = "comments")
+    private String comment;
 
-	@JoinColumn(name = "customer_id")
-	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	private Customer customer;
+    @JoinColumn(name = "customer_id")
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private Customer customer;
 
-	@JoinColumn(name = "appliance_id")
-	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	private Appliance appliance;
+    @JoinColumn(name = "appliance_id")
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private Appliance appliance;
 }

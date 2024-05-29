@@ -17,12 +17,13 @@ import java.util.List;
 public class ApplianceController {
 
     private final ApplicationService applicationService;
+
     @PostMapping("/save")
     public ResponseEntity<Integer> saveApplianceInfo(@RequestBody ApplianceDto dto) {
-        Integer result = applicationService.saveApplienceDetails(dto);
+        Integer result = applicationService.saveApplianceDetails(dto);
         return ResponseEntity.status(HttpStatus.OK).body(result);
     }
-    
+
     @GetMapping("/get")
     public ResponseEntity<List<ApplianceDto>> getAllAppliances() {
         List<ApplianceDto> list = applicationService.getAllAppliances();

@@ -13,12 +13,12 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @Builder
 public class ApplianceDto {
-	
-	private String email;
-	private ApplianceBrand applianceBrand;
-	private LocalDate yearOfManufacturing;
-	private ProductType productType;
-	private String serialNo;
-	private WarrentyStatus warrentyStatus;
-	
+
+    private String email;
+    private ApplianceBrand applianceBrand;
+    private LocalDate yearOfManufacturing;
+    private ProductType productType;
+    private String serialNo;
+    private WarrentyStatus warrentyStatus;
+
 }

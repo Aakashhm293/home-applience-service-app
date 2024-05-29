@@ -1,10 +1,10 @@
 package com.excel.homeas.exceptions.customer;
 
-public class CustomerException extends RuntimeException{
-	
-	private static final long serialVersionUID = 1L;
+public class CustomerException extends RuntimeException {
 
-	public CustomerException(String message) {
-		super(message);
-	}
+    private static final long serialVersionUID = 1L;
+
+    public CustomerException(String message) {
+        super(message);
+    }
 }

@@ -11,16 +11,16 @@ import lombok.*;
 @Setter
 @Builder
 public class Technician {
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer technicianId;
-	private String technicianFirstName;
-	private String technicianLastName;
-	private String email;
-	private String password;
-	private String phoneNo;
-	private String address;
-	
-	@Enumerated(EnumType.STRING)
-	private Status status;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer technicianId;
+    private String technicianFirstName;
+    private String technicianLastName;
+    private String email;
+    private String password;
+    private String phoneNo;
+    private String address;
+
+    @Enumerated(EnumType.STRING)
+    private Status status;
 }

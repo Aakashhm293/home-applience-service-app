@@ -1,10 +1,6 @@
 package com.excel.homeas.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @Getter
 @Setter
@@ -13,11 +9,11 @@ import lombok.Setter;
 @Builder
 public class CustomerRegistrationDto {
 
-	private Integer customerId;
-	private String customerFirstName;
-	private String customerLastName;
-	private String email;
-	private String password;
-	private String phoneNo;
-	private String address;
+    private Integer customerId;
+    private String customerFirstName;
+    private String customerLastName;
+    private String email;
+    private String password;
+    private String phoneNo;
+    private String address;
 }

@@ -2,7 +2,7 @@ package com.excel.homeas.constant;
 
 public class ApplicationConstants {
 
-    private ApplicationConstants(){
+    private ApplicationConstants() {
 
     }
 
