@@ -13,7 +13,7 @@ import TechnicianLogin from "../Pages/Login/Technician/TechnicianLogin";
 import CustomerDashboard from "../Pages/Dashboards/CustomerDashboard/CustomerDashboard";
 import HomePage from "../Pages/HomePage/HomePage";
 
-function MainRouter() {
+export default function MainRouter() {
   return (
     <>
       <AnimatePresence mode="wait">
@@ -37,5 +37,3 @@ function MainRouter() {
     </>
   );
 }
-
-export default MainRouter;

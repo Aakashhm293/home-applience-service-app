@@ -1,11 +1,9 @@
 import MainRouter from "./service/MainRouter";
 
-function App() {
+export default function App() {
   return (
     <>
       <MainRouter />
     </>
   );
 }
-
-export default App;

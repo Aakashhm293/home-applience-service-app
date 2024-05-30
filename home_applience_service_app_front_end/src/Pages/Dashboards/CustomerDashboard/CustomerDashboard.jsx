@@ -2,12 +2,12 @@ import { Fragment } from "react";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
 import { BellIcon, Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import { Link } from "react-router-dom";
-import Products from "./Products";
 import image from "../../../images/logo.png";
 import { motion } from "framer-motion";
+import Products from "../../../components/CustomerDashboard/Products";
 
 const user = {
-  name: "Tom Cook",
+  name: "user",
   email: "tom@example.com",
   imageUrl:
     "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",

@@ -10,16 +10,65 @@ function classNames(...classes) {
 
 export default function CustRegister() {
   const [agreed, setAgreed] = useState(false);
+  const [passwordMatch, setPasswordMatch] = useState(true);
 
-  const [user, setUser] = useState();
+  const [user, setUser] = useState({
+    customerFirstName: "",
+    customerLastName: "",
+    email: "",
+    password: "",
+    confpassword: "",
+    phoneNo: "",
+    address: "",
+  });
   const navigate = useNavigate();
 
   const registerUser = async (user) => {
-    let res = await axios.post("http://localhost:8080/customer/save", user);
-    if (res.data.data) {
-      alert(res.data.message);
-      navigate("/custlogin");
+    if (!validateEmail(user.email)) {
+      alert("Please enter a valid email address.");
+      return;
     }
+
+    if (!validatePassword(user.password)) {
+      alert("Password must be at least 8 characters long.");
+      return;
+    }
+
+    if (!validatePasswordMatch(user.password, user.confpassword)) {
+      alert("Password and Confirm Password do not match.");
+      return;
+    }
+
+    try {
+      let res = await axios.post("http://localhost:8080/customer/save", user);
+      if (res.data.data === 1) {
+        alert(res.data.message);
+        navigate("/custlogin");
+      }
+    } catch (error) {
+      console.error("Error registering user:", error);
+    }
+  };
+
+  const validateEmail = (email) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  };
+
+  const validatePassword = (password) => {
+    return password.length >= 8;
+  };
+
+  const validatePasswordMatch = (password, confpassword) => {
+    return password === confpassword;
+  };
+
+  const handlePasswordChange = (event) => {
+    setUser({
+      ...user,
+      [event.target.name]: event.target.value,
+    });
+    setPasswordMatch(validatePasswordMatch(user.password, event.target.value));
   };
 
   return (
@@ -115,29 +164,46 @@ export default function CustRegister() {
                     className="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                   />
                 </div>
-                <div>
-                  <label
-                    htmlFor="password"
-                    className="block text-sm font-semibold leading-6 text-gray-900 py-5"
-                  >
-                    Password
-                  </label>
-                  <div className="mt-2.5 ">
-                    <input
-                      type="password"
-                      name="password"
-                      id="password"
-                      placeholder="Password"
-                      autoComplete="organization"
-                      onChange={(event) =>
-                        setUser({ ...user, password: event.target.value })
-                      }
-                      className="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                    />
-                  </div>
+              </div>
+              <div>
+                <label
+                  htmlFor="password"
+                  className="block text-sm font-semibold leading-6 text-gray-900"
+                >
+                  Password
+                </label>
+                <div className="mt-2.5 ">
+                  <input
+                    type="password"
+                    name="password"
+                    id="password"
+                    placeholder="Password"
+                    autoComplete="organization"
+                    onChange={handlePasswordChange} // Use the handlePasswordChange function
+                    className="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  />
+                </div>
+                <div className="mt-2.5">
+                  <input
+                    type="password"
+                    name="confpassword"
+                    id="confpassword"
+                    placeholder="Confirm your password"
+                    autoComplete="organization"
+                    onChange={handlePasswordChange} // Use the handlePasswordChange function
+                    className={classNames(
+                      passwordMatch
+                        ? "block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                        : "block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-red-500 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-red-500 sm:text-sm sm:leading-6"
+                    )}
+                  />
+                  {!passwordMatch && (
+                    <p className="mt-1 text-sm text-red-500">
+                      Passwords do not match.
+                    </p>
+                  )}
                 </div>
               </div>
-
               <div className="sm:col-span-2">
                 <label
                   htmlFor="phone-number"

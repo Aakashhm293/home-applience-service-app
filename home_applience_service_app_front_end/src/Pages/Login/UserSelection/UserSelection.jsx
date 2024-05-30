@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import icon from "../../../images/chooseuser.jpeg"
+import icon from "../../../images/chooseuser.jpeg";
 
 export default function UserSelection() {
   return (
@@ -13,11 +13,7 @@ export default function UserSelection() {
       >
         <div className="flex min-h-full flex-1 mt-24 flex-col justify-center px-6 py-12 lg:px-8">
           <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-            <img
-              className="mx-auto h-10 w-auto"
-              src={icon}
-              alt=""
-            />
+            <img className="mx-auto h-10 w-auto" src={icon} alt="" />
             <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
               So, Which type of user are you?
             </h2>
