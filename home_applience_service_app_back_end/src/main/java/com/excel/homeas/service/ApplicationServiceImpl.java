@@ -1,25 +1,31 @@
 package com.excel.homeas.service;
 
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
+
+import org.springframework.stereotype.Service;
+
 import com.excel.homeas.constant.ApplicationConstants;
-import com.excel.homeas.dto.*;
+import com.excel.homeas.dto.ApplianceDto;
+import com.excel.homeas.dto.CustomerLoginDto;
+import com.excel.homeas.dto.CustomerRegistrationDto;
+import com.excel.homeas.dto.ServiceRequestsDto;
+import com.excel.homeas.dto.TechnicianLoginDto;
+import com.excel.homeas.dto.TechnicianRegistrationDto;
 import com.excel.homeas.entity.Appliance;
 import com.excel.homeas.entity.Customer;
 import com.excel.homeas.entity.ServiceRequests;
 import com.excel.homeas.entity.Technician;
 import com.excel.homeas.exceptions.appliance.ApplianceException;
 import com.excel.homeas.exceptions.customer.CustomerException;
-import com.excel.homeas.exceptions.servicerequest.ServiceRequestException;
 import com.excel.homeas.exceptions.technician.TechnicianException;
 import com.excel.homeas.repository.ApplianceRepository;
 import com.excel.homeas.repository.CustomerRepository;
 import com.excel.homeas.repository.ServiceRequestRepository;
 import com.excel.homeas.repository.TechnicianRepository;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
+import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 @Service
@@ -361,22 +367,21 @@ public class ApplicationServiceImpl implements ApplicationService {
 
     @Override
     public Integer updateServiceRequestDetails(ServiceRequestsDto dto) {
-        Optional<Appliance> optional = applianceRepository.findByCustomerEmail(dto.getEmail());
-
-        if (optional.isPresent()) {
-            Appliance appliance = optional.get();
-            ServiceRequests serviceRequests = ServiceRequests.builder()
-                    .createdOn(dto.getCreatedOn())
-                    .updatedOn(dto.getUpdatedOn())
-                    .appointmentDate(dto.getAppointmentDate())
-                    .serviceStatus(dto.getServiceStatus())
-                    .comment(dto.getComment())
-                    .build();
-
-            appliance.setServiceRequests(serviceRequests);
-            serviceRequests.setAppliance(appliance);
-            return applianceRepository.save(appliance).getApplianceId();
-        }
-        throw new ServiceRequestException(ApplicationConstants.SERVICE_REQUEST_NOT_FOUND);
+		return null;
+//        Optional<Appliance> optional = applianceRepository.findByCustomerEmail(dto.getEmail());
+//
+//        if (optional.isPresent()) {
+//            Appliance appliance = optional.get();
+//            ServiceRequests serviceRequests = ServiceRequests.builder()
+//                    .createdOn(dto.getCreatedOn())
+//                    .updatedOn(dto.getUpdatedOn())
+//                    .appointmentDate(dto.getAppointmentDate())
+//                    .serviceStatus(dto.getServiceStatus())
+//                    .comment(dto.getComment())
+//                    .build();
+//
+//            return applianceRepository.save(appliance).getApplianceId();
+//        }
+//        throw new ServiceRequestException(ApplicationConstants.SERVICE_REQUEST_NOT_FOUND);
     }
 }

@@ -121,19 +121,17 @@ const Products = () => {
     },
   ];
 
-  // Function to handle input changes for service request
   const handleInputChangeService = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
 
-  // Function to handle form submission for service request
   const handleSubmitService = async (e) => {
     e.preventDefault();
     try {
       const response = await axios.post(
         "http://localhost:8080/service/save",
-        formData // Send formData for service request
+        formData
       );
       alert(
         "Service request has been successfully registered. You will get a call from our technician team shortly.",
@@ -144,8 +142,6 @@ const Products = () => {
       console.error("Error submitting service request form:", error);
     }
   };
-
-  // openModal for appliance
 
   const openModal = (product) => {
     setSelectedProduct(product);

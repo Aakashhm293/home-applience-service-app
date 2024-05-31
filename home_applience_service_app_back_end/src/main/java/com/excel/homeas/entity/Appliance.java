@@ -43,8 +43,4 @@ public class Appliance {
     @JoinColumn(name = "customer_id")
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Customer customer;
-
-
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "appliance")
-    private ServiceRequests serviceRequests;
 }

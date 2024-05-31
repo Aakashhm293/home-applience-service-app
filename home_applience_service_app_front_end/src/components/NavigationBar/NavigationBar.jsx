@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/16/solid";
 import { Dialog } from "@headlessui/react";
 
-function NavigationBar() {
+export default function NavigationBar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   return (
     <>
@@ -121,5 +121,3 @@ function NavigationBar() {
     </>
   );
 }
-
-export default NavigationBar;

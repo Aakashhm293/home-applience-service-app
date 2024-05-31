@@ -16,7 +16,6 @@ public class ServiceRequests {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-
     @Column(name = "service_id")
     private Integer serviceId;
 
@@ -39,8 +38,4 @@ public class ServiceRequests {
     @JoinColumn(name = "customer_id")
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Customer customer;
-
-    @JoinColumn(name = "appliance_id")
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private Appliance appliance;
 }
