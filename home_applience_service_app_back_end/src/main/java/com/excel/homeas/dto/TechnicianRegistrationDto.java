@@ -1,12 +1,7 @@
 package com.excel.homeas.dto;
 
-import com.excel.homeas.enums.forentity.Status;
-
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import com.excel.homeas.enums.Status;
+import lombok.*;
 
 @Getter
 @Setter
@@ -14,12 +9,12 @@ import lombok.Setter;
 @NoArgsConstructor
 @Builder
 public class TechnicianRegistrationDto {
-	private Integer technicianId;
-	private String technicianFirstName;
-	private String technicianLastName;
-	private String email;
-	private String password;
-	private String phoneNo;
-	private String address;
-	private Status status;
+    private Integer technicianId;
+    private String technicianFirstName;
+    private String technicianLastName;
+    private String email;
+    private String password;
+    private String phoneNo;
+    private String address;
+    private Status status;
 }

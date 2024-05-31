@@ -1,21 +1,8 @@
 package com.excel.homeas.entity;
 
-import com.excel.homeas.enums.forentity.Status;
-
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToOne;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import com.excel.homeas.enums.Status;
+import jakarta.persistence.*;
+import lombok.*;
 
 @Entity
 @AllArgsConstructor
@@ -24,19 +11,16 @@ import lombok.Setter;
 @Setter
 @Builder
 public class Technician {
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer technicianId;
-	private String technicianFirstName;
-	private String technicianLastName;
-	private String email;
-	private String password;
-	private String phoneNo;
-	private String address;
-	
-	@Enumerated(EnumType.STRING)
-	private Status status;
-	
-	@OneToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
-	private ServiceRequests serviceRequests;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer technicianId;
+    private String technicianFirstName;
+    private String technicianLastName;
+    private String email;
+    private String password;
+    private String phoneNo;
+    private String address;
+
+    @Enumerated(EnumType.STRING)
+    private Status status;
 }

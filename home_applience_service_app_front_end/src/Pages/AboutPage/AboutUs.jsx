@@ -1,6 +1,6 @@
 import NavigationBarHome from "../../components/NavigationBar/NavigationBarHome";
 import { motion } from "framer-motion";
-import Footer from "../NavigationBar/Footer/Footer";
+import Footer from "../../components/Footer/Footer";
 
 const links = [
   { name: "Highly Skilled professionals", href: "#" },

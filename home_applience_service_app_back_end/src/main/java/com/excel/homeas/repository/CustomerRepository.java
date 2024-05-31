@@ -1,13 +1,12 @@
 package com.excel.homeas.repository;
 
-import java.util.Optional;
-
+import com.excel.homeas.entity.Customer;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.excel.homeas.entity.Customer;
+import java.util.Optional;
 
-public interface CustomerRepository extends JpaRepository<Customer, Integer>{
+public interface CustomerRepository extends JpaRepository<Customer, Integer> {
 
-	Optional<Customer> findByEmail(String email);
+    Optional<Customer> findByEmail(String email);
 
 }

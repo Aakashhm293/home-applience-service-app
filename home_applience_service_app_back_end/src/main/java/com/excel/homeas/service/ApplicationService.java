@@ -1,51 +1,54 @@
 package com.excel.homeas.service;
 
+import com.excel.homeas.dto.*;
+
 import java.util.List;
 
-import com.excel.homeas.dto.ApplienceDto;
-import com.excel.homeas.dto.CustomerRegistrationDto;
-import com.excel.homeas.dto.ServiceRequestsDto;
-import com.excel.homeas.dto.TechnicianRegistrationDto;
-import com.excel.homeas.entity.Applience;
-
 public interface ApplicationService {
-	
-	//-----[ Customer ]-----
 
-	public String saveCustomerDetials(CustomerRegistrationDto dto);
 
-	public CustomerRegistrationDto getAllCustomerDetails(CustomerRegistrationDto dto);
+    // -----[ Customer ]-----
 
-	public String updateCustomerDetails(CustomerRegistrationDto dto);
+    public Integer saveCustomerDetials(CustomerRegistrationDto dto);
 
-	public String deleteCustomerDetails(CustomerRegistrationDto dto);
-	
-	//------[ Technician ]-----
+    public CustomerRegistrationDto getAllCustomerDetails(CustomerRegistrationDto dto);
 
-	public Integer saveTechnicianDetials(TechnicianRegistrationDto dto);
-	
-	public TechnicianRegistrationDto getTechnicianDetails(TechnicianRegistrationDto dto);
-	
-	public String updateTechnicianDetails(TechnicianRegistrationDto dto);
-	
-	public String deleteTechnicianDetails(TechnicianRegistrationDto dto);
-	
-	//-----[ Appliance ]-----
-	
-	public Integer saveApplienceDetails(ApplienceDto dto);
-	
-	List<Applience> getAllAppliences();
-	
-	public Integer updateApplienceDetails(ApplienceDto dto);
-	
-	public String deleteApplienceDetails(ApplienceDto dto);
-	
-	//-----[ Service ]-----
+    public String updateCustomerDetails(CustomerRegistrationDto dto);
 
-	public String saveServiceRequest(ServiceRequestsDto dto);
-	
-	public List<ServiceRequestsDto> getAllServiceRequests();
+    public String deleteCustomerDetails(CustomerRegistrationDto dto);
 
-	public Integer updateServiceReuestDetails(ServiceRequestsDto dto);
-	
+    public Integer checkCustomerLogin(CustomerLoginDto dto);
+
+
+    // ------[ Technician ]-----
+
+    public String saveTechnicianDetails(TechnicianRegistrationDto dto);
+
+    public TechnicianRegistrationDto getTechnicianDetails(TechnicianRegistrationDto dto);
+
+    public String updateTechnicianDetails(TechnicianRegistrationDto dto);
+
+    public String deleteTechnicianDetails(TechnicianRegistrationDto dto);
+
+    public Integer checkTechnicianLogin(TechnicianLoginDto dto);
+
+
+    // -----[ Appliance ]-----
+
+    public Integer saveApplianceDetails(ApplianceDto dto);
+
+    List<ApplianceDto> getAllAppliances();
+
+    public Integer updateApplianceDetails(ApplianceDto dto);
+
+    public String deleteApplianceDetails(ApplianceDto dto);
+
+
+    // -----[ Service ]-----
+
+    public String saveServiceRequest(ServiceRequestsDto dto);
+
+    public List<ServiceRequestsDto> getAllServiceRequests();
+
+    public Integer updateServiceRequestDetails(ServiceRequestsDto dto);
 }

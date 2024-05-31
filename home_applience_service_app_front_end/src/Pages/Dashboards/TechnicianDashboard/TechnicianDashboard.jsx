@@ -1,12 +1,17 @@
-import { Fragment, useState } from "react";
+import React, { Fragment, useState } from "react";
 import { Dialog, Menu, Transition } from "@headlessui/react";
 import { HomeIcon, Bars2Icon, XMarkIcon } from "@heroicons/react/24/outline";
-import ContactTables from "../../TechnicianDashboardComponents/ContactTables";
+import { Link } from "react-router-dom";
+import { FileIcon } from "lucide-react";
+import { motion } from "framer-motion";
+import ProductDetails from "../../../components/TechnicianDashboard/ProductDetails";
+import ServiceRequests from "../../../components/TechnicianDashboard/ServiceRequests";
 
 const navigation = [
-  { name: "Dashboard", to: "#", icon: HomeIcon, current: true },
+  { name: "Dashboard", to: "#", icon: HomeIcon },
+  { name: "Product Details", to: "#", icon: FileIcon },
 ];
-const userNavigation = [{ name: "Sign out", to: "/" }];
+const userNavigation = [{ name: "Log out", to: "/" }];
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
@@ -14,10 +19,16 @@ function classNames(...classes) {
 
 export default function TechnicianDashboard() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [selectedNavItem, setSelectedNavItem] = useState(navigation[0]);
+
+  const handleNavItemClick = (item) => {
+    setSelectedNavItem(item);
+    setSidebarOpen(false);
+  };
 
   return (
     <>
-      <div>
+      <div className="flex">
         <Transition.Root show={sidebarOpen} as={Fragment}>
           <Dialog
             as="div"
@@ -82,11 +93,12 @@ export default function TechnicianDashboard() {
                         key={item.name}
                         href={item.to}
                         className={classNames(
-                          item.current
+                          selectedNavItem === item
                             ? "bg-indigo-800 text-white"
                             : "text-indigo-100 hover:bg-indigo-600",
                           "group flex items-center px-2 py-2 text-base font-medium rounded-md"
                         )}
+                        onClick={() => handleNavItemClick(item)}
                       >
                         <item.icon
                           className="mr-4 flex-shrink-0 h-6 w-6 text-indigo-300"
@@ -116,22 +128,23 @@ export default function TechnicianDashboard() {
             <div className="mt-5 flex-1 flex flex-col">
               <nav className="flex-1 px-2 pb-4 space-y-1">
                 {navigation.map((item) => (
-                  <a
+                  <Link
                     key={item.name}
-                    href={item.to}
+                    to={item.to}
                     className={classNames(
-                      item.current
+                      selectedNavItem === item
                         ? "bg-indigo-800 text-white"
                         : "text-indigo-100 hover:bg-indigo-600",
                       "group flex items-center px-2 py-2 text-sm font-medium rounded-md"
                     )}
+                    onClick={() => handleNavItemClick(item)}
                   >
                     <item.icon
                       className="mr-3 flex-shrink-0 h-6 w-6 text-indigo-300"
                       aria-hidden="true"
                     />
                     {item.name}
-                  </a>
+                  </Link>
                 ))}
               </nav>
             </div>
@@ -201,20 +214,35 @@ export default function TechnicianDashboard() {
           </div>
 
           <main>
-            <div className="py-6">
-              <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
-                <h1 className="text-2xl font-semibold text-gray-900">
-                  Appointments
-                </h1>
-              </div>
-              <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
-                <div className="py-4">
-                  <div className="border-4 border-indigo-700 rounded-lg h-auto">
-                    <ContactTables />
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 1.5 }}
+            >
+              <div className="py-6">
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
+                  <h1 className="text-2xl font-semibold text-gray-900">
+                    {selectedNavItem.name === "Product Details"
+                      ? "Product Details"
+                      : "Service Requests"}
+                  </h1>
+                </div>
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
+                  <div className="py-4">
+                    {selectedNavItem.name === "Product Details" ? (
+                      <div className="border-4 border-indigo-700 rounded-lg h-auto">
+                        <ProductDetails />
+                      </div>
+                    ) : (
+                      <div className="border-4 border-indigo-700 rounded-lg h-auto">
+                        <ServiceRequests />
+                      </div>
+                    )}
                   </div>
                 </div>
               </div>
-            </div>
+            </motion.div>
           </main>
         </div>
       </div>
