@@ -38,13 +38,13 @@ export default function ServiceRequests() {
                       scope="col"
                       className="px-6 py-3 text-left text-xs font-bold text-black tracking-wider"
                     >
-                      Created On
+                      Available Range From
                     </th>
                     <th
                       scope="col"
                       className="px-6 py-3 text-left text-xs font-bold text-black tracking-wider"
                     >
-                      Updated On
+                      Available Range To
                     </th>
                     <th
                       scope="col"

@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import Modal from "react-modal";
 import axios from "axios";
-import DateComponent from "../../components/DateComponent";
 
 const customStyles = {
   content: {
@@ -32,7 +31,16 @@ const Products = () => {
     createdOn: "",
     updatedOn: "",
     appointmentDate: "",
+    comment: "",
   });
+
+  const [selectedDate, setSelectedDate] = useState("");
+
+  const handleDateChange = (e) => {
+    const inputDate = e.target.value;
+    const formattedDate = new Date(inputDate).toISOString().split("T")[0];
+    setSelectedDate(formattedDate);
+  };
 
   const applianceBrandOptions = [
     "LG",
@@ -58,6 +66,8 @@ const Products = () => {
     "COFFEEDISPENSER",
     "REFRIGERATOR",
   ];
+
+  const serviceStatusOptions = ["ONQUEUE", "COMPLETED"];
   const warrantyOptions = ["UNDERWARRENTY", "OUTOFWARRENTY"];
 
   const products = [
@@ -111,6 +121,30 @@ const Products = () => {
     },
   ];
 
+  // Function to handle input changes for service request
+  const handleInputChangeService = (e) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+  };
+
+  // Function to handle form submission for service request
+  const handleSubmitService = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await axios.post(
+        "http://localhost:8080/service/save",
+        formData // Send formData for service request
+      );
+      alert(
+        "Service request has been successfully registered. You will get a call from our technician team shortly.",
+        response.data
+      );
+      closeModalService();
+    } catch (error) {
+      console.error("Error submitting service request form:", error);
+    }
+  };
+
   // openModal for appliance
 
   const openModal = (product) => {
@@ -148,8 +182,6 @@ const Products = () => {
     }
   };
 
-  // openModal for Service Request
-
   const openModalService = (product) => {
     setSelectedProduct(product);
     setFormData({
@@ -162,28 +194,6 @@ const Products = () => {
   const closeModalService = () => {
     setIsOpenService(false);
   };
-
-  const handleInputChangeService = (e) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
-  };
-
-  const handleSubmitService = async (e) => {
-    e.preventDefault();
-    try {
-      const response = await axios.post(
-        "http://localhost:8080/appliance/save",
-        formData
-      );
-      alert(
-        "Appointment has been successfully registered, You will get a call from our technician team shortly",
-        response.data
-      );
-      closeModalService();
-    } catch (error) {
-      console.error("Error submitting form:", error);
-    }
-  };
   return (
     <>
       <motion.div
@@ -193,7 +203,7 @@ const Products = () => {
         transition={{ duration: 1.5 }}
       >
         <div className="bg-white">
-          <div className="max-w-7xl mx-auto py-16 px-4 overflow-hidden sm:py-24 sm:px-6 lg:px-8">
+          <div className="max-w-7xl mx-auto py-16 px-4 overflow-hidden sm:py-8 sm:px-6 lg:px-3">
             <div className="grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-3 lg:gap-x-8">
               {products.map((product) => (
                 <div key={product.id}>
@@ -370,7 +380,6 @@ const Products = () => {
           </div>
         </form>
       </Modal>
-      {/* Modal for Service Request */}
       <Modal
         isOpen={modalIsOpenService}
         onRequestClose={closeModalService}
@@ -396,20 +405,78 @@ const Products = () => {
             />
           </div>
           <div className="mb-4">
-            <label htmlFor="productType" className="block mb-1">
-              Appointment Date
-            </label>
-            <DateComponent />
-          </div>
-          <div className="mb-4">
-            <label htmlFor="warrantyStatus" className="block mb-1">
-              Comments
+            <label htmlFor="createdOn" className="block mb-1">
+              Available Range From
             </label>
             <input
-              type="comments"
-              id="comments"
-              name="comments"
-              value={formData.comments}
+              type="date"
+              id="createdOn"
+              name="createdOn"
+              value={formData.createdOn}
+              onChange={handleInputChangeService}
+              className="w-full px-4 py-2 border rounded-md focus:outline-none focus:border-indigo-500"
+              required
+            />
+          </div>
+          <div className="mb-4">
+            <label htmlFor="updatedOn" className="block mb-1">
+              Available Range To
+            </label>
+            <input
+              type="date"
+              id="updatedOn"
+              name="updatedOn"
+              value={formData.updatedOn}
+              onChange={handleInputChangeService}
+              className="w-full px-4 py-2 border rounded-md focus:outline-none focus:border-indigo-500"
+              required
+            />
+          </div>
+          <div className="mb-4">
+            <label htmlFor="appointmentDate" className="block mb-1">
+              Appointment Date
+            </label>
+            <input
+              type="date"
+              id="appointmentDate"
+              name="appointmentDate"
+              value={formData.appointmentDate}
+              onChange={handleInputChangeService}
+              className="w-full px-4 py-2 border rounded-md focus:outline-none focus:border-indigo-500"
+              required
+            />
+          </div>
+
+          <div className="mb-4">
+            <label htmlFor="serviceStatus" className="block mb-1">
+              Service Status
+            </label>
+            <select
+              id="serviceStatus"
+              name="serviceStatus"
+              value={formData.serviceStatus}
+              onChange={handleInputChange}
+              className="w-full px-4 py-2 border rounded-md focus:outline-none focus:border-indigo-500"
+              required
+              disabled
+            >
+              <option value="">On Queue</option>
+              {serviceStatusOptions.map((option) => (
+                <option key={option} value={option}>
+                  {option}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          <div className="mb-4">
+            <label htmlFor="comment" className="block mb-1">
+              Comment
+            </label>
+            <textarea
+              id="comment"
+              name="comment"
+              value={formData.comment}
               onChange={handleInputChangeService}
               className="w-full px-4 py-2 border rounded-md focus:outline-none focus:border-indigo-500"
               required

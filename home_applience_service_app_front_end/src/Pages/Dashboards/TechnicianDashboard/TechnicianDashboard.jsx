@@ -11,7 +11,7 @@ const navigation = [
   { name: "Dashboard", to: "#", icon: HomeIcon },
   { name: "Product Details", to: "#", icon: FileIcon },
 ];
-const userNavigation = [{ name: "Sign out", to: "/" }];
+const userNavigation = [{ name: "Log out", to: "/" }];
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");

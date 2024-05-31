@@ -13,7 +13,7 @@ const user = {
     "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
 };
 const navigation = [{ name: "Dashboard", to: "#", current: true }];
-const userNavigation = [{ name: "Sign out", to: "/" }];
+const userNavigation = [{ name: "Log out", to: "/" }];
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
@@ -205,7 +205,7 @@ export default function CustomerDashboard() {
 
           <main className="-mt-32">
             <div className="max-w-7xl mx-auto pb-12 px-4 sm:px-6 lg:px-8">
-              <div className="bg-white rounded-lg shadow-2xl px-5 py-6 sm:px-6">
+              <div className="bg-white rounded-lg shadow-2xl px-5 sm:px-6">
                 <div className="h-200">
                   <Products />
                 </div>

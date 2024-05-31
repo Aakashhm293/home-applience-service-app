@@ -74,7 +74,7 @@ export default function ProductDetails() {
                         className="hover:bg-gray-100 transition duration-300"
                       >
                         <td className="py-2 px-4">{req.email}</td>
-                        <td className="py-2 px-4">{req.applienceBrand}</td>
+                        <td className="py-2 px-4">{req.applianceBrand}</td>
                         <td className="py-2 px-4">{req.yearOfManufacturing}</td>
                         <td className="py-2 px-4">{req.productType}</td>
                         <td className="py-2 px-4">{req.serialNo}</td>
