@@ -19,6 +19,7 @@ import com.excel.homeas.entity.ServiceRequests;
 import com.excel.homeas.entity.Technician;
 import com.excel.homeas.exceptions.appliance.ApplianceException;
 import com.excel.homeas.exceptions.customer.CustomerException;
+import com.excel.homeas.exceptions.servicerequest.ServiceRequestException;
 import com.excel.homeas.exceptions.technician.TechnicianException;
 import com.excel.homeas.repository.ApplianceRepository;
 import com.excel.homeas.repository.CustomerRepository;
@@ -367,21 +368,25 @@ public class ApplicationServiceImpl implements ApplicationService {
 
     @Override
     public Integer updateServiceRequestDetails(ServiceRequestsDto dto) {
-		return null;
-//        Optional<Appliance> optional = applianceRepository.findByCustomerEmail(dto.getEmail());
-//
-//        if (optional.isPresent()) {
-//            Appliance appliance = optional.get();
-//            ServiceRequests serviceRequests = ServiceRequests.builder()
-//                    .createdOn(dto.getCreatedOn())
-//                    .updatedOn(dto.getUpdatedOn())
-//                    .appointmentDate(dto.getAppointmentDate())
-//                    .serviceStatus(dto.getServiceStatus())
-//                    .comment(dto.getComment())
-//                    .build();
-//
-//            return applianceRepository.save(appliance).getApplianceId();
-//        }
-//        throw new ServiceRequestException(ApplicationConstants.SERVICE_REQUEST_NOT_FOUND);
+        Optional<ServiceRequests> optional = serviceRequestRepository.findByCustomerEmail(dto.getEmail());
+        if (optional.isPresent()) {
+            ServiceRequests requests = optional.get();
+            ServiceRequests serviceRequests = ServiceRequests.builder()
+                    .serviceStatus(dto.getServiceStatus())
+                    .comment(dto.getComment())
+                    .build();
+            
+            requests.setServiceStatus(serviceRequests.getServiceStatus());
+            requests.setComment(serviceRequests.getComment());
+
+            ServiceRequests save = serviceRequestRepository.save(requests);
+            
+            if(save !=null) {
+            	return 1;
+            }else {
+            	return 0;
+            }
+        }
+        throw new ServiceRequestException(ApplicationConstants.SERVICE_REQUEST_NOT_FOUND);
     }
 }

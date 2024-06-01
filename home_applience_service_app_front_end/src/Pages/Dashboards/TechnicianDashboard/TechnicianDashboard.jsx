@@ -6,9 +6,10 @@ import { FileIcon } from "lucide-react";
 import { motion } from "framer-motion";
 import ProductDetails from "../../../components/TechnicianDashboard/ProductDetails";
 import ServiceRequests from "../../../components/TechnicianDashboard/ServiceRequests";
+import profile from "../../../images/profile.png";
 
 const navigation = [
-  { name: "Dashboard", to: "#", icon: HomeIcon },
+  { name: "Service Requests", to: "#", icon: HomeIcon },
   { name: "Product Details", to: "#", icon: FileIcon },
 ];
 const userNavigation = [{ name: "Log out", to: "/" }];
@@ -80,11 +81,7 @@ export default function TechnicianDashboard() {
                   </div>
                 </Transition.Child>
                 <div className="flex-shrink-0 flex items-center px-4">
-                  <img
-                    className="h-8 w-auto"
-                    src="https://cdn-icons-png.flaticon.com/128/8871/8871097.png"
-                    alt="Workflow"
-                  />
+                  <img className="h-8 w-auto" src={profile} alt="Workflow" />
                 </div>
                 <div className="mt-5 flex-1 h-0 overflow-y-auto">
                   <nav className="px-2 space-y-1">
@@ -176,7 +173,7 @@ export default function TechnicianDashboard() {
                       <span className="sr-only">Open user menu</span>
                       <img
                         className="h-8 w-8 rounded-full"
-                        src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+                        src={profile}
                         alt=""
                       />
                     </Menu.Button>
@@ -231,11 +228,11 @@ export default function TechnicianDashboard() {
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
                   <div className="py-4">
                     {selectedNavItem.name === "Product Details" ? (
-                      <div className="border-4 border-indigo-700 rounded-lg h-auto">
+                      <div className="border-2 border-indigo-700 rounded-lg h-auto">
                         <ProductDetails />
                       </div>
                     ) : (
-                      <div className="border-4 border-indigo-700 rounded-lg h-auto">
+                      <div className="border-2 border-indigo-700 rounded-lg h-auto">
                         <ServiceRequests />
                       </div>
                     )}
