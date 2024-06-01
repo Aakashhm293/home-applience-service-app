@@ -31,6 +31,7 @@ const Products = () => {
     createdOn: "",
     updatedOn: "",
     appointmentDate: "",
+    serviceStatus: "",
     comment: "",
   });
 
@@ -67,7 +68,6 @@ const Products = () => {
     "REFRIGERATOR",
   ];
 
-  const serviceStatusOptions = ["ONQUEUE", "COMPLETED"];
   const warrantyOptions = ["UNDERWARRENTY", "OUTOFWARRENTY"];
 
   const products = [
@@ -450,18 +450,13 @@ const Products = () => {
             <select
               id="serviceStatus"
               name="serviceStatus"
-              value={formData.serviceStatus}
+              value={(formData.serviceStatus = "ACTIVE")}
               onChange={handleInputChange}
               className="w-full px-4 py-2 border rounded-md focus:outline-none focus:border-indigo-500"
               required
               disabled
             >
-              <option value="">On Queue</option>
-              {serviceStatusOptions.map((option) => (
-                <option key={option} value={option}>
-                  {option}
-                </option>
-              ))}
+              <option value="">Active</option>
             </select>
           </div>
 
