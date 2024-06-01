@@ -35,12 +35,16 @@ const Products = () => {
     comment: "",
   });
 
-  const [selectedDate, setSelectedDate] = useState("");
+  const [modalOpen, setModalOpen] = useState(false);
+  const [modalOpenAppointment, setModalOpenAppointment] = useState(false);
+  const [modalMessage, setModalMessage] = useState("");
 
-  const handleDateChange = (e) => {
-    const inputDate = e.target.value;
-    const formattedDate = new Date(inputDate).toISOString().split("T")[0];
-    setSelectedDate(formattedDate);
+  const closeModalPopUp = () => {
+    setModalOpen(false);
+  };
+
+  const closeModalPopUpAppointment = () => {
+    setModalOpenAppointment(false);
   };
 
   const applianceBrandOptions = [
@@ -129,15 +133,11 @@ const Products = () => {
   const handleSubmitService = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post(
-        "http://localhost:8080/service/save",
-        formData
-      );
-      alert(
-        "Service request has been successfully registered. You will get a call from our technician team shortly.",
-        response.data
-      );
-      closeModalService();
+      const response = await axios
+        .post("http://localhost:8080/service/save", formData)
+        .then((response) => setModalMessage(response.data.data));
+      setModalOpen(true);
+      setIsOpenService(false);
     } catch (error) {
       console.error("Error submitting service request form:", error);
     }
@@ -168,10 +168,8 @@ const Products = () => {
         "http://localhost:8080/appliance/save",
         formData
       );
-      alert(
-        "Appointment has been successfully registered, You will get a call from our technician team shortly",
-        response.data
-      );
+      setModalOpenAppointment(true);
+      setIsOpen(false);
       closeModal();
     } catch (error) {
       console.error("Error submitting form:", error);
@@ -200,6 +198,45 @@ const Products = () => {
       >
         <div className="bg-white">
           <div className="max-w-7xl mx-auto py-16 px-4 overflow-hidden sm:py-8 sm:px-6 lg:px-3">
+            {modalOpen && (
+              <div className="fixed top-0 left-0 w-full h-full flex justify-center items-center bg-gray-800 bg-opacity-50 text-white z-50">
+                <div className="bg-white p-8 rounded shadow-lg max-w-md flex flex-col">
+                  <p className="text-lg font-semibold mb-4 text-black">
+                    Appointment has been successfully registered, Thank you,
+                    Please Expect a call/email from out technician team.
+                  </p>
+                  <p className="text-lg font-semibold mb-4 text-black">
+                    {modalMessage}
+                  </p>
+                  <button
+                    className="mt-4 ml-auto px-4 py-2 bg-indigo-600 text-white rounded hover:bg-violet-700 focus:outline-none focus:bg-indigo-600"
+                    onClick={closeModalPopUp}
+                  >
+                    Close
+                  </button>
+                </div>
+              </div>
+            )}
+            {modalOpenAppointment && (
+              <div className="fixed top-0 left-0 w-full h-full flex justify-center items-center bg-gray-800 bg-opacity-50 text-white z-50">
+                <div className="bg-white p-8 rounded shadow-lg max-w-md flex flex-col">
+                  <p className="text-lg font-semibold mb-4 text-black">
+                    Service Request has been successfully registered. Please
+                    Book an appointment for appropriate date.
+                  </p>
+                  <p className="text-lg font-semibold mb-4 text-black">
+                    {modalMessage}
+                  </p>
+                  <button
+                    className="mt-4 ml-auto px-4 py-2 bg-indigo-600 text-white rounded hover:bg-violet-700 focus:outline-none focus:bg-indigo-600"
+                    onClick={closeModalPopUpAppointment}
+                  >
+                    Close
+                  </button>
+                </div>
+              </div>
+            )}
+
             <div className="grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-3 lg:gap-x-8">
               {products.map((product) => (
                 <div key={product.id}>
@@ -226,14 +263,14 @@ const Products = () => {
                     className="mt-5 bg-transparent hover:bg-indigo-500 text-indigo-700 font-semibold hover:text-white py-1 px-3 border border-indigo-500 hover:border-transparent rounded-2xl"
                     onClick={() => openModal(product)}
                   >
-                    Book Appointment
+                    Service Request
                   </button>
                   <button
                     type="button"
                     className="mt-5 mx-4 bg-transparent hover:bg-indigo-500 text-indigo-700 font-semibold hover:text-white py-1 px-3 border border-indigo-500 hover:border-transparent rounded-2xl"
                     onClick={() => openModalService(product)}
                   >
-                    Service Request
+                    Book Appointment
                   </button>
                 </div>
               ))}
@@ -248,7 +285,7 @@ const Products = () => {
         contentLabel="Book Appointment Modal"
       >
         <h2 className="text-xl font-bold mb-4">
-          Book Appointment for {selectedProduct && selectedProduct.name}
+          Raise A Service Request for {selectedProduct && selectedProduct.name}
         </h2>
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
@@ -383,7 +420,7 @@ const Products = () => {
         contentLabel="Service Request Modal"
       >
         <h2 className="text-xl font-bold mb-4">
-          Raise a Service Request for {selectedProduct && selectedProduct.name}
+          Book Appointment for {selectedProduct && selectedProduct.name}
         </h2>
         <form onSubmit={handleSubmitService}>
           <div className="mb-4">

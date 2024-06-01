@@ -10,7 +10,7 @@ const user = {
   name: "user",
   email: "tom@example.com",
   imageUrl:
-    "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
+    "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse2.mm.bing.net%2Fth%3Fid%3DOIP.azdGx4FxdBOMQWXjf6Bk-wHaHa%26pid%3DApi&f=1&ipt=946bb1e4e8a73f4887d4d9ebcbb2a6d298208afde487d710fc3b39630248f060&ipo=images",
 };
 const navigation = [{ name: "Dashboard", to: "#", current: true }];
 const userNavigation = [{ name: "Log out", to: "/" }];
