@@ -1,4 +1,4 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import customer from "../../../images/customer.png";
 import { useState } from "react";
@@ -9,6 +9,8 @@ export default function CustLogin() {
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
 
+  const { state } = useLocation();
+
   const loginUser = async () => {
     try {
       const res = await axios.post("http://localhost:8080/customer/login", {
@@ -18,13 +20,12 @@ export default function CustLogin() {
 
       if (res.data.data === 1) {
         alert("Login Successful");
-        navigate("/custdashboard");
+        navigate("/custdashboard", { state: state });
       } else {
         alert("Login Failed");
       }
     } catch (error) {
       console.error("Login Error:", error);
-
       alert("Login Failed. Please try again.");
     }
   };
@@ -48,9 +49,8 @@ export default function CustLogin() {
               Customer Login
             </h2>
           </div>
-          <div className="circlePosition w-[460px] h-[400px] bg-gradient-to-r from-cyan-500 to-blue-500 rounded-[50%] absolute z-1 top-[0] translate-x-[20] opacity-30 blur-[34px] left-[10%]"></div>
-          <div className="circlePosition w-[460px] h-[400px] bg-gradient-to-r from-violet-500 to-purple-500 rounded-[50%] absolute z-1 top-[50%] translate-x-[20px] opacity-30 blur-[34px] right-[10%]"></div>
-
+          <div className="circlePosition w-[400px] h-[400px] bg-gradient-to-r from-cyan-500 to-blue-500 rounded-[50%] absolute z-1 translate-x-[20] opacity-30 blur-[34px] top-[-10%]"></div>
+          <div className="circlePosition w-[400px] h-[400px] bg-gradient-to-r from-violet-500 to-purple-500 rounded-[50%] absolute z-1 top-[50%] translate-x-[20px] opacity-30 blur-[34px] right-[5%]"></div>
           <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
             <form className="space-y-6">
               <div>
@@ -106,8 +106,8 @@ export default function CustLogin() {
             </form>
 
             <p className="mt-10 text-center text-sm text-gray-500">
-              Not a member?{" "}
-              <Link to="/custregister" className="text-indigo-600">
+              Not a member?
+              <Link to="/custregister" className="text-indigo-600 ml-3">
                 Please Register Here
               </Link>
             </p>

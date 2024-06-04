@@ -188,6 +188,7 @@ const Products = () => {
   const closeModalService = () => {
     setIsOpenService(false);
   };
+
   return (
     <>
       <motion.div
@@ -487,13 +488,13 @@ const Products = () => {
             <select
               id="serviceStatus"
               name="serviceStatus"
-              value={(formData.serviceStatus = "ACTIVE")}
+              value={(formData.serviceStatus = "ONQUEUE")}
               onChange={handleInputChange}
               className="w-full px-4 py-2 border rounded-md focus:outline-none focus:border-indigo-500"
               required
               disabled
             >
-              <option value="">Active</option>
+              <option value="">On Queue</option>
             </select>
           </div>
 

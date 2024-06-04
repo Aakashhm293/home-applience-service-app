@@ -114,7 +114,7 @@ export default function ServiceRequests() {
                             onClick={toggleModal}
                             className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                           >
-                            Edit
+                            Update
                           </button>
                         </td>
                       </tr>
@@ -147,7 +147,7 @@ export default function ServiceRequests() {
                 <div className="sm:flex sm:items-start">
                   <div className="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
                     <h3 className="text-lg leading-6 font-medium text-gray-900 mb-4">
-                      Edit Service Request
+                      Update Service Request Status
                     </h3>
                     <div className="mb-4">
                       <label

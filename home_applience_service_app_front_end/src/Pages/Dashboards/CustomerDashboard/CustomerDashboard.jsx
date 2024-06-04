@@ -1,14 +1,14 @@
 import { Fragment } from "react";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
-import { BellIcon, Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
-import { Link } from "react-router-dom";
+import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
+import { Link, useLocation } from "react-router-dom";
 import image from "../../../images/logo.png";
 import { motion } from "framer-motion";
 import Products from "../../../components/CustomerDashboard/Products";
 
 const user = {
   name: "user",
-  email: "tom@example.com",
+  email: "user@example.com",
   imageUrl:
     "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse2.mm.bing.net%2Fth%3Fid%3DOIP.azdGx4FxdBOMQWXjf6Bk-wHaHa%26pid%3DApi&f=1&ipt=946bb1e4e8a73f4887d4d9ebcbb2a6d298208afde487d710fc3b39630248f060&ipo=images",
 };
@@ -20,6 +20,8 @@ function classNames(...classes) {
 }
 
 export default function CustomerDashboard() {
+  const { state } = useLocation();
+
   return (
     <>
       <motion.div
@@ -168,13 +170,6 @@ export default function CustomerDashboard() {
                             {user.email}
                           </div>
                         </div>
-                        <button
-                          type="button"
-                          className="ml-auto bg-indigo-600 flex-shrink-0 rounded-full p-1 text-indigo-200 hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-indigo-600 focus:ring-white"
-                        >
-                          <span className="sr-only">View notifications</span>
-                          <BellIcon className="h-6 w-6" aria-hidden="true" />
-                        </button>
                       </div>
                       <div className="mt-3 px-2 space-y-1">
                         {userNavigation.map((item) => (
@@ -195,7 +190,9 @@ export default function CustomerDashboard() {
             </Disclosure>
             <header className="py-10">
               <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <h1 className="text-3xl font-bold text-white">Welcome</h1>
+                <h1 className="text-3xl font-bold text-white">
+                  Welcome {state}
+                </h1>
                 <p className="text-white">
                   Please Choose the service you wish to go for.
                 </p>
