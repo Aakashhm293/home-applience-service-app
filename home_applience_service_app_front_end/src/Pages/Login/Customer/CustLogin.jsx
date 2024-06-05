@@ -1,4 +1,4 @@
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import customer from "../../../images/customer.png";
 import { useState } from "react";
@@ -9,18 +9,19 @@ export default function CustLogin() {
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
 
-  const { state } = useLocation();
-
   const loginUser = async () => {
     try {
-      const res = await axios.post("http://localhost:8080/customer/login", {
-        email,
-        password,
-      });
+      const response = await axios.post(
+        "http://localhost:8080/customer/login",
+        {
+          email,
+          password,
+        }
+      );
 
-      if (res.data.data === 1) {
+      if (response.data.data.response === 1) {
         alert("Login Successful");
-        navigate("/custdashboard", { state: state });
+        navigate("/custdashboard", { state: response.data.data.name });
       } else {
         alert("Login Failed");
       }

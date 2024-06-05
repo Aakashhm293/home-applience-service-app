@@ -125,16 +125,21 @@ public class ApplicationServiceImpl implements ApplicationService {
         }
         throw new CustomerException(ApplicationConstants.CUSTOMER_NOT_FOUND);
     }
-
+    
     @Override
-    public Integer checkCustomerLogin(CustomerLoginDto dto) {
+    public CustomerLoginDto checkCustomerLogin(CustomerLoginDto dto) {
         Optional<Customer> optional = customerRepository.findByEmail(dto.getEmail());
         if (optional.isPresent()) {
             Customer customer = optional.get();
             if (customer.getPassword().equals(dto.getPassword())) {
-                return 1;
+                return CustomerLoginDto.builder()
+                		.response(1)
+                		.name(customer.getCustomerFirstName())
+                		.build();
             } else {
-                return 0;
+                return CustomerLoginDto.builder()
+                		.response(0)
+                		.build();
             }
         } else {
             throw new CustomerException(ApplicationConstants.CUSTOMER_NOT_FOUND);
@@ -383,8 +388,6 @@ public class ApplicationServiceImpl implements ApplicationService {
             
             if(save !=null) {
             	return 1;
-            }else {
-            	return 0;
             }
         }
         throw new ServiceRequestException(ApplicationConstants.SERVICE_REQUEST_NOT_FOUND);

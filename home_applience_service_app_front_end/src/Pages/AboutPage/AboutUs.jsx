@@ -1,6 +1,5 @@
 import NavigationBarHome from "../../components/NavigationBar/NavigationBarHome";
 import { motion } from "framer-motion";
-import Footer from "../../components/Footer/Footer";
 
 const links = [
   { name: "Highly Skilled professionals", href: "#" },
@@ -86,7 +85,6 @@ export default function AboutUs() {
           </div>
         </div>
       </motion.div>
-      <Footer />
     </>
   );
 }

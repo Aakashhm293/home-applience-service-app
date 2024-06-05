@@ -17,7 +17,7 @@ public interface ApplicationService {
 
     public String deleteCustomerDetails(CustomerRegistrationDto dto);
 
-    public Integer checkCustomerLogin(CustomerLoginDto dto);
+    public CustomerLoginDto checkCustomerLogin(CustomerLoginDto dto);
 
 
     // ------[ Technician ]-----
