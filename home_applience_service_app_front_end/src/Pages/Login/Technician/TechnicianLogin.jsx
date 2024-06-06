@@ -48,8 +48,8 @@ export default function TechnicianLogin() {
               Technician Login
             </h2>
           </div>
-          <div className="circlePosition w-[460px] h-[400px] bg-gradient-to-r from-cyan-500 to-blue-500 rounded-[50%] absolute z-1 top-[0] translate-x-[20] opacity-30 blur-[34px] left-[10%]"></div>
-          <div className="circlePosition w-[460px] h-[400px] bg-gradient-to-r from-violet-500 to-purple-500 rounded-[50%] absolute z-1 top-[50%] translate-x-[20px] opacity-30 blur-[34px] right-[10%]"></div>
+          <div className="circlePosition w-[400px] h-[400px] bg-gradient-to-r from-cyan-500 to-blue-500 rounded-[50%] absolute z-1 translate-x-[20] opacity-30 blur-[34px] top-[-10%]"></div>
+          <div className="circlePosition w-[400px] h-[400px] bg-gradient-to-r from-violet-500 to-purple-500 rounded-[50%] absolute z-1 top-[50%] translate-x-[20px] opacity-30 blur-[34px] right-[5%]"></div>
 
           <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
             <form className="space-y-6">

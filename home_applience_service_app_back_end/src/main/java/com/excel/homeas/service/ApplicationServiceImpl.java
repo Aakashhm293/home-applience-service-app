@@ -2,7 +2,6 @@ package com.excel.homeas.service;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
@@ -125,16 +124,21 @@ public class ApplicationServiceImpl implements ApplicationService {
         }
         throw new CustomerException(ApplicationConstants.CUSTOMER_NOT_FOUND);
     }
-
+    
     @Override
-    public Integer checkCustomerLogin(CustomerLoginDto dto) {
+    public CustomerLoginDto checkCustomerLogin(CustomerLoginDto dto) {
         Optional<Customer> optional = customerRepository.findByEmail(dto.getEmail());
         if (optional.isPresent()) {
             Customer customer = optional.get();
             if (customer.getPassword().equals(dto.getPassword())) {
-                return 1;
+                return CustomerLoginDto.builder()
+                		.response(1)
+                		.name(customer.getCustomerFirstName())
+                		.build();
             } else {
-                return 0;
+                return CustomerLoginDto.builder()
+                		.response(0)
+                		.build();
             }
         } else {
             throw new CustomerException(ApplicationConstants.CUSTOMER_NOT_FOUND);
@@ -363,7 +367,7 @@ public class ApplicationServiceImpl implements ApplicationService {
                 .appointmentDate(e.getAppointmentDate())
                 .serviceStatus(e.getServiceStatus())
                 .comment(e.getComment())
-                .build()).collect(Collectors.toList());
+                .build()).toList();
     }
 
     @Override
@@ -379,12 +383,10 @@ public class ApplicationServiceImpl implements ApplicationService {
             requests.setServiceStatus(serviceRequests.getServiceStatus());
             requests.setComment(serviceRequests.getComment());
 
-            ServiceRequests save = serviceRequestRepository.save(requests);
+            Integer save = serviceRequestRepository.save(requests).getCustomer().getCustomerId();
             
-            if(save !=null) {
+            if(save != null) {
             	return 1;
-            }else {
-            	return 0;
             }
         }
         throw new ServiceRequestException(ApplicationConstants.SERVICE_REQUEST_NOT_FOUND);

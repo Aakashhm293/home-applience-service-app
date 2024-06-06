@@ -33,7 +33,7 @@ public class CustomerController {
         return ResponseEntity.status(HttpStatus.OK).body(Response.<CustomerRegistrationDto>builder()
                 .data(allCustomerDetails)
                 .isError(false)
-                .message("Here Is the Customer Date")
+                .message("Here Is the Customer Data")
                 .build());
     }
 
@@ -54,9 +54,9 @@ public class CustomerController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<Response<Integer>> loginCustomer(@RequestBody CustomerLoginDto dto) {
-        Integer login = applicationService.checkCustomerLogin(dto);
-        return ResponseEntity.status(HttpStatus.OK).body(Response.<Integer>builder()
+    public ResponseEntity<Response<CustomerLoginDto>> loginCustomer(@RequestBody CustomerLoginDto dto) {
+        CustomerLoginDto login = applicationService.checkCustomerLogin(dto);
+        return ResponseEntity.status(HttpStatus.OK).body(Response.<CustomerLoginDto>builder()
                 .data(login)
                 .isError(false)
                 .message("Done")

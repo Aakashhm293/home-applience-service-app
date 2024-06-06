@@ -12,7 +12,7 @@ public class CustomerExceptionHandler {
 
     @ExceptionHandler(CustomerException.class)
     public ResponseEntity<Response<String>> customerNotFound(RuntimeException exp) {
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Response.<String>builder()
+        return ResponseEntity.status(HttpStatus.OK).body(Response.<String>builder()
                 .data(null)
                 .isError(true)
                 .message(ApplicationConstants.CUSTOMER_DETAILS_ALREADY_EXISTS)

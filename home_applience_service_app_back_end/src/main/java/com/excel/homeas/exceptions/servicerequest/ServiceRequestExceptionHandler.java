@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 public class ServiceRequestExceptionHandler {
     @ExceptionHandler(ServiceRequestException.class)
     public ResponseEntity<Response<String>> serviceRequestNotFound(RuntimeException exp) {
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Response.<String>builder()
+        return ResponseEntity.status(HttpStatus.OK).body(Response.<String>builder()
                 .data(null)
                 .isError(true)
                 .message("Service Not Found")

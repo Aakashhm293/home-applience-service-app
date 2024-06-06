@@ -1,6 +1,5 @@
 import { useState } from "react";
-import { Switch } from "@headlessui/react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import axios from "axios";
 
@@ -9,9 +8,8 @@ function classNames(...classes) {
 }
 
 export default function CustRegister() {
-  const [agreed, setAgreed] = useState(false);
   const [passwordMatch, setPasswordMatch] = useState(true);
-
+  const [phoneValid, setPhoneValid] = useState(true);
   const [user, setUser] = useState({
     customerFirstName: "",
     customerLastName: "",
@@ -38,12 +36,18 @@ export default function CustRegister() {
       alert("Password and Confirm Password do not match.");
       return;
     }
+    if (!validatePhone(user.phoneNo)) {
+      alert("Please enter a valid phone number.");
+      return;
+    }
 
     try {
       let res = await axios.post("http://localhost:8080/customer/save", user);
-      if (res.data.data === 1) {
+      if (res.data.data !== null) {
         alert(res.data.message);
         navigate("/custlogin");
+      } else {
+        alert(res.data.message);
       }
     } catch (error) {
       console.error("Error registering user:", error);
@@ -69,6 +73,18 @@ export default function CustRegister() {
       [event.target.name]: event.target.value,
     });
     setPasswordMatch(validatePasswordMatch(user.password, event.target.value));
+  };
+  const validatePhone = (phone) => {
+    const phoneRegex = /^\d{10}$/;
+    return phoneRegex.test(phone);
+  };
+
+  const handlePhoneChange = (event) => {
+    setUser({
+      ...user,
+      phoneNo: event.target.value,
+    });
+    setPhoneValid(validatePhone(event.target.value));
   };
 
   return (
@@ -97,7 +113,7 @@ export default function CustRegister() {
               Customer Registration
             </h2>
           </div>
-          <form className="mx-auto mt-16 max-w-xl sm:mt-20">
+          <form className="mx-auto mt-16 max-w-xl sm:mt-16">
             <div className="grid grid-cols-1 gap-x-8 gap-y-6 sm:grid-cols-2">
               <div>
                 <label
@@ -112,7 +128,7 @@ export default function CustRegister() {
                     name="first-name"
                     id="first-name"
                     autoComplete="given-name"
-                    placeholder="first name"
+                    placeholder="Enter your first name"
                     onChange={(event) =>
                       setUser({
                         ...user,
@@ -135,7 +151,7 @@ export default function CustRegister() {
                     type="text"
                     name="last-name"
                     id="last-name"
-                    placeholder="last name"
+                    placeholder="Enter your last name"
                     autoComplete="family-name"
                     onChange={(event) =>
                       setUser({ ...user, customerLastName: event.target.value })
@@ -211,15 +227,15 @@ export default function CustRegister() {
                 >
                   Phone number
                 </label>
-                <div className="relative mt-2.5">
-                  <div className="absolute inset-y-0 left-0 flex items-center">
+                <div className="relative mt-2.5 flex">
+                  <div>
                     <label htmlFor="country" className="sr-only">
                       Country
                     </label>
                     <select
                       id="country"
                       name="country"
-                      className="h-full rounded-md border-0 bg-transparent bg-none py-0 pl-4 pr-9 text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm"
+                      className="h-10 rounded-md mt-0 border bg-white bg-none pl-3 pr-7 text-gray-900 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm"
                     >
                       <option>IN</option>
                       <option>US</option>
@@ -227,16 +243,26 @@ export default function CustRegister() {
                       <option>CA</option>
                     </select>
                   </div>
-                  <input
-                    type="tel"
-                    name="phone-number"
-                    id="phone-number"
-                    autoComplete="tel"
-                    onChange={(event) =>
-                      setUser({ ...user, phoneNo: event.target.value })
-                    }
-                    className="block w-full rounded-md border-0 px-3.5 py-2 pl-20 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                  />
+                  <div>
+                    <input
+                      type="tel"
+                      name="phone-number"
+                      id="phone-number"
+                      autoComplete="tel"
+                      onChange={handlePhoneChange}
+                      placeholder="Enter your phone no"
+                      className={classNames(
+                        phoneValid
+                          ? "block w-44 ml-3 rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                          : "block w-44 ml-3 rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-red-500 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-red-500 sm:text-sm sm:leading-6"
+                      )}
+                    />
+                    {!phoneValid && (
+                      <p className="text-sm text-red-500">
+                        Please enter a valid phone number.
+                      </p>
+                    )}
+                  </div>
                 </div>
                 <div className="sm:col-span-2 mt-5">
                   <label
@@ -260,36 +286,6 @@ export default function CustRegister() {
                   </div>
                 </div>
               </div>
-              <Switch.Group
-                as="div"
-                className="flex gap-x-4 sm:col-span-2 mt-5"
-              >
-                <div className="flex h-6 items-center">
-                  <Switch
-                    checked={agreed}
-                    onChange={setAgreed}
-                    className={classNames(
-                      agreed ? "bg-indigo-600" : "bg-gray-200",
-                      "flex w-8 flex-none cursor-pointer rounded-full p-px ring-1 ring-inset ring-gray-900/5 transition-colors duration-200 ease-in-out focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                    )}
-                  >
-                    <span className="sr-only">Agree to policies</span>
-                    <span
-                      aria-hidden="true"
-                      className={classNames(
-                        agreed ? "translate-x-3.5" : "translate-x-0",
-                        "h-4 w-4 transform rounded-full bg-white shadow-sm ring-1 ring-gray-900/5 transition duration-200 ease-in-out"
-                      )}
-                    />
-                  </Switch>
-                </div>
-                <Switch.Label className="text-sm leading-6 text-gray-600">
-                  By selecting this, you agree to our{" "}
-                  <Link to="#" className="font-semibold text-indigo-600">
-                    privacy policy
-                  </Link>
-                </Switch.Label>
-              </Switch.Group>
             </div>
             <div className="mt-10">
               <button

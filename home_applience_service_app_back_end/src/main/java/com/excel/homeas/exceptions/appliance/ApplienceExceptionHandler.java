@@ -11,7 +11,7 @@ public class ApplienceExceptionHandler {
 
     @ExceptionHandler(ApplianceException.class)
     public ResponseEntity<Response<String>> applienceNotFound(RuntimeException exp) {
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Response.<String>builder()
+        return ResponseEntity.status(HttpStatus.OK).body(Response.<String>builder()
                 .data(null)
                 .isError(true)
                 .build());
