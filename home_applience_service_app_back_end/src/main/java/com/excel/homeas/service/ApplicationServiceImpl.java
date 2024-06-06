@@ -2,7 +2,6 @@ package com.excel.homeas.service;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
@@ -368,7 +367,7 @@ public class ApplicationServiceImpl implements ApplicationService {
                 .appointmentDate(e.getAppointmentDate())
                 .serviceStatus(e.getServiceStatus())
                 .comment(e.getComment())
-                .build()).collect(Collectors.toList());
+                .build()).toList();
     }
 
     @Override
@@ -384,9 +383,9 @@ public class ApplicationServiceImpl implements ApplicationService {
             requests.setServiceStatus(serviceRequests.getServiceStatus());
             requests.setComment(serviceRequests.getComment());
 
-            ServiceRequests save = serviceRequestRepository.save(requests);
+            Integer save = serviceRequestRepository.save(requests).getCustomer().getCustomerId();
             
-            if(save !=null) {
+            if(save != null) {
             	return 1;
             }
         }

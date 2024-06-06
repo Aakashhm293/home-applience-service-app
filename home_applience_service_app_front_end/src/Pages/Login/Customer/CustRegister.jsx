@@ -43,9 +43,9 @@ export default function CustRegister() {
 
     try {
       let res = await axios.post("http://localhost:8080/customer/save", user);
-      if (res.data.data === 1) {
+      if (res.data.data !== null) {
         alert(res.data.message);
-        navigate("/custlogin", { state: user.customerFirstName });
+        navigate("/custlogin");
       } else {
         alert(res.data.message);
       }
