@@ -12,6 +12,7 @@ import UserSelection from "../Pages/Login/UserSelection/UserSelection";
 import TechnicianLogin from "../Pages/Login/Technician/TechnicianLogin";
 import CustomerDashboard from "../Pages/Dashboards/CustomerDashboard/CustomerDashboard";
 import HomePage from "../Pages/HomePage/HomePage";
+import TechnicianRegistration from "../Pages/Login/Technician/TechnicianRegistration";
 
 export default function MainRouter() {
   return (
@@ -20,6 +21,7 @@ export default function MainRouter() {
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<HomePage />} />
+            <Route path="admindashboard" element={<TechnicianRegistration />} />
             <Route path="custdashboard" element={<CustomerDashboard />} />
             <Route path="services" element={<ServicePage />} />
             <Route path="plans" element={<PricingPage />} />
@@ -31,6 +33,7 @@ export default function MainRouter() {
             <Route path="techlogin" element={<TechnicianLogin />} />
             <Route path="*" element={<PageNotFound />} />
             <Route path="techdashboard" element={<TechnicianDashboard />} />
+            <Route path="adminlogin" element={<AdminRoute />} />
           </Routes>
         </BrowserRouter>
       </AnimatePresence>

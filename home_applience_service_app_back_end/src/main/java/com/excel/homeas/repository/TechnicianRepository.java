@@ -1,9 +1,10 @@
 package com.excel.homeas.repository;
 
-import com.excel.homeas.entity.Technician;
+import java.util.Optional;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import java.util.Optional;
+import com.excel.homeas.entity.Technician;
 
 public interface TechnicianRepository extends JpaRepository<Technician, Integer> {
 
