@@ -10,17 +10,17 @@ export default function TechnicianLogin() {
   const navigate = useNavigate();
 
   const loginAdmin = () => {
-    navigate("/admindashboard");
+    navigate("/adminlogin");
   };
 
   const loginUser = async () => {
     try {
-      const res = await axios.post("http://localhost:8080/technician/signing", {
+      const res = await axios.post("http://localhost:8080/technician/signin", {
         email,
         password,
       });
 
-      if (res.data === 1) {
+      if (res.data.data === 1) {
         alert("Login Successful");
         navigate("/techdashboard");
       } else {

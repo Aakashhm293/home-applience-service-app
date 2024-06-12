@@ -34,7 +34,7 @@ public class TechnicianController {
         		
     }
 
-    @PostMapping("/signing")
+    @PostMapping("/signin")
     public ResponseEntity<Response<Integer>> loginTechnician(@RequestBody TechnicianLoginDto dto) {
         Integer login = applicationService.checkTechnicianLogin(dto);
         return ResponseEntity.status(HttpStatus.OK).body(Response.<Integer>builder()

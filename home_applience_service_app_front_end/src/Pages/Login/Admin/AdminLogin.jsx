@@ -11,17 +11,14 @@ export default function CustLogin() {
 
   const loginUser = async () => {
     try {
-      const response = await axios.post(
-        "http://localhost:8080/customer/login",
-        {
-          email,
-          password,
-        }
-      );
+      const response = await axios.post("http://localhost:8080/admin/signin", {
+        email,
+        password,
+      });
 
       if (response.data.data.response === 1) {
         alert("Login Successful");
-        navigate("/custdashboard", { state: response.data.data.name });
+        navigate("/techregistration");
       } else {
         alert("Login Failed");
       }

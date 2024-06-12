@@ -89,47 +89,6 @@ public class ApplicationServiceImpl implements ApplicationService {
         }
 
     }
-
-    @Override
-    public String updateCustomerDetails(CustomerRegistrationDto dto) {
-        Optional<Customer> optional = customerRepository.findByEmail(dto.getEmail());
-
-        if (optional.isPresent()) {
-            Customer customer = optional.get();
-
-            Customer customer1 = Customer.builder()
-                    .customerFirstName(dto.getCustomerFirstName())
-                    .customerLastName(dto.getCustomerLastName())
-                    .email(dto.getEmail())
-                    .password(dto.getPassword())
-                    .phoneNo(dto.getPhoneNo())
-                    .address(dto.getAddress())
-                    .build();
-
-            customer.setCustomerFirstName(customer1.getCustomerFirstName());
-            customer.setCustomerLastName(customer1.getCustomerLastName());
-            customer.setEmail(customer1.getEmail());
-            customer.setPassword(customer1.getPassword());
-            customer.setPhoneNo(customer1.getPhoneNo());
-            customer.setAddress(customer1.getAddress());
-
-            return customerRepository.save(customer).getEmail();
-        }
-
-        throw new CustomerException(ApplicationConstants.CUSTOMER_NOT_REGISTERED);
-    }
-
-    @Override
-    public String deleteCustomerDetails(CustomerRegistrationDto dto) {
-        Optional<Customer> optional = customerRepository.findByEmail(dto.getEmail());
-
-        if (optional.isPresent()) {
-            Customer customer = optional.get();
-            customerRepository.delete(customer);
-            return "Successfully Deleted";
-        }
-        throw new CustomerException(ApplicationConstants.CUSTOMER_NOT_FOUND);
-    }
     
     @Override
     public CustomerLoginDto checkCustomerLogin(CustomerLoginDto dto) {

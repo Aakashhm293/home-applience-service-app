@@ -33,7 +33,7 @@ public class AdminController {
                 .build());
     }
 	
-	@PostMapping("signin")
+	@PostMapping("/signin")
 	public ResponseEntity<Response<AdminLoginDto>> adminLogin(@RequestBody AdminLoginDto dto){
 		AdminLoginDto loginDto = applicationService.checkAdminLogin(dto);
 		return ResponseEntity.status(HttpStatus.OK).body(Response.<AdminLoginDto>builder()

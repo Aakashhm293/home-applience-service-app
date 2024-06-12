@@ -20,10 +20,6 @@ public interface ApplicationService {
 
     public CustomerRegistrationDto getAllCustomerDetails(CustomerRegistrationDto dto);
 
-    public String updateCustomerDetails(CustomerRegistrationDto dto);
-
-    public String deleteCustomerDetails(CustomerRegistrationDto dto);
-
     public CustomerLoginDto checkCustomerLogin(CustomerLoginDto dto);
 
 
