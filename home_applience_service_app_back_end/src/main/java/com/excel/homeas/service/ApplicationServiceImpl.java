@@ -99,6 +99,7 @@ public class ApplicationServiceImpl implements ApplicationService {
                 return CustomerLoginDto.builder()
                 		.response(1)
                 		.name(customer.getCustomerFirstName())
+                		.email(customer.getEmail())
                 		.build();
             } else {
                 return CustomerLoginDto.builder()

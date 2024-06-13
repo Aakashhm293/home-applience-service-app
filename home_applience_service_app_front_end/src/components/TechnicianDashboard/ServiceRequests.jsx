@@ -6,6 +6,8 @@ export default function ServiceRequests() {
   const [fetchServiceRequests, setFetchServiceRequests] = useState([]);
   const [showModal, setShowModal] = useState(false);
 
+  const statusOption = ["ACTIVE", "ONQUEUE", "COMPLETED"];
+
   useEffect(() => {
     getReq();
   }, []);
@@ -142,8 +144,8 @@ export default function ServiceRequests() {
             >
               &#8203;
             </span>
-            <div className="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
-              <div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+            <div className="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-auto">
+              <div className="bg-white px-5 pt-5 pb-4 sm:p-4 sm:pb-4">
                 <div className="sm:flex sm:items-start">
                   <div className="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
                     <h3 className="text-lg leading-6 font-medium text-gray-900 mb-4">
@@ -162,22 +164,30 @@ export default function ServiceRequests() {
                         id="email"
                         value={formData.email}
                         onChange={handleInputChange}
-                        className="mt-1 p-2 block w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 rounded-md"
+                        className="mt-1 p-2 block border w-96 me-5 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 rounded-md"
                       />
-                      <label
-                        htmlFor="serviceStatus"
-                        className="block text-sm mt-4 font-medium text-gray-700"
-                      >
-                        Service Status
-                      </label>
-                      <input
-                        type="text"
-                        name="serviceStatus"
-                        id="serviceStatus"
-                        value={formData.serviceStatus}
-                        onChange={handleInputChange}
-                        className="mt-1 p-2 block w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 rounded-md"
-                      />
+                      <div className="mb-4">
+                        <label htmlFor="serviceStatus" className="block mb-1">
+                          Service Status
+                        </label>
+                        <select
+                          id="serviceStatus"
+                          name="serviceStatus"
+                          value={formData.serviceStatus}
+                          onChange={handleInputChange}
+                          className="w-96 px-4 py-2 border rounded-md me-5 focus:outline-none focus:border-indigo-500"
+                          required
+                        >
+                          <option value="serviceStatus">
+                            Select Service Status
+                          </option>
+                          {statusOption.map((option) => (
+                            <option key={option} value={option}>
+                              {option}
+                            </option>
+                          ))}
+                        </select>
+                      </div>
                     </div>
                     <div className="mb-4">
                       <label
@@ -192,14 +202,14 @@ export default function ServiceRequests() {
                         rows={3}
                         value={formData.comment}
                         onChange={handleInputChange}
-                        className="mt-1 p-2 block w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 border border-gray-300 rounded-md"
+                        className="mt-1 p-2 block w-96 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 border border-gray-300 rounded-md"
                       ></textarea>
                     </div>
                     <div className="mt-5 sm:mt-4 sm:flex sm:flex-row-reverse">
                       <button
                         type="button"
                         onClick={handleUpdate}
-                        className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-indigo-600 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:ml-3 sm:w-auto sm:text-sm"
+                        className="w-full inline-flex justify-center me-5 rounded-md border border-transparent shadow-sm px-4 py-2 bg-indigo-600 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:ml-3 sm:w-auto sm:text-sm"
                       >
                         Save Changes
                       </button>

@@ -16,7 +16,7 @@ public class CustomerExceptionHandler {
         return ResponseEntity.status(HttpStatus.OK).body(Response.<String>builder()
                 .data(null)
                 .isError(true)
-                .message(ApplicationConstants.CUSTOMER_DETAILS_ALREADY_EXISTS)
+                .message(ApplicationConstants.CUSTOMER_NOT_REGISTERED)
                 .build());
     }
 }
