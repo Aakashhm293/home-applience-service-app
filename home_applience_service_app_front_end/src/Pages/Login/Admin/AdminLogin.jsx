@@ -1,34 +1,29 @@
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
-import technician from "../../../images/technician.png";
+import customer from "../../../images/customer.png";
 import { useState } from "react";
 import axios from "axios";
 
-export default function TechnicianLogin() {
+export default function CustLogin() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
 
-  const loginAdmin = () => {
-    navigate("/adminlogin");
-  };
-
   const loginUser = async () => {
     try {
-      const res = await axios.post("http://localhost:8080/technician/signin", {
+      const response = await axios.post("http://localhost:8080/admin/signin", {
         email,
         password,
       });
 
-      if (res.data.data === 1) {
+      if (response.data.data.response === 1) {
         alert("Login Successful");
-        navigate("/techdashboard");
+        navigate("/techregistration");
       } else {
         alert("Login Failed");
       }
     } catch (error) {
       console.error("Login Error:", error);
-
       alert("Login Failed. Please try again.");
     }
   };
@@ -45,16 +40,15 @@ export default function TechnicianLogin() {
           <div className="sm:mx-auto sm:w-full sm:max-w-sm">
             <img
               className="mx-auto h-10 w-auto"
-              src={technician}
+              src={customer}
               alt="Your Company"
             />
             <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
-              Technician Login
+              Admin Login
             </h2>
           </div>
           <div className="circlePosition w-[400px] h-[400px] bg-gradient-to-r from-cyan-500 to-blue-500 rounded-[50%] absolute z-1 translate-x-[20] opacity-30 blur-[34px] top-[-10%]"></div>
           <div className="circlePosition w-[400px] h-[400px] bg-gradient-to-r from-violet-500 to-purple-500 rounded-[50%] absolute z-1 top-[50%] translate-x-[20px] opacity-30 blur-[34px] right-[5%]"></div>
-
           <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
             <form className="space-y-6">
               <div>
@@ -85,14 +79,6 @@ export default function TechnicianLogin() {
                   >
                     Password
                   </label>
-                  <div className="text-sm">
-                    <Link
-                      to=""
-                      className="font-semibold text-indigo-600 hover:text-indigo-500"
-                    >
-                      Forgot password?
-                    </Link>
-                  </div>
                 </div>
                 <div className="mt-2">
                   <input
@@ -106,7 +92,6 @@ export default function TechnicianLogin() {
                   />
                 </div>
               </div>
-
               <div>
                 <button
                   type="button"
@@ -114,13 +99,6 @@ export default function TechnicianLogin() {
                   className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                 >
                   Log in
-                </button>
-                <button
-                  type="button"
-                  onClick={loginAdmin}
-                  className="flex w-full justify-center rounded-md bg-indigo-600 mt-3 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                >
-                  Admin user?
                 </button>
               </div>
             </form>

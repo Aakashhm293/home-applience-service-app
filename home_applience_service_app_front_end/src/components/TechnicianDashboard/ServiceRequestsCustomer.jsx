@@ -4,37 +4,15 @@ import { motion } from "framer-motion";
 
 export default function ServiceRequests() {
   const [fetchServiceRequests, setFetchServiceRequests] = useState([]);
-  const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
     getReq();
   }, []);
 
-  const [formData, setFormData] = useState({
-    email: "",
-    serviceStatus: "",
-    comment: "",
-  });
-
-  const toggleModal = () => {
-    setShowModal(!showModal);
-  };
-
   const getReq = () => {
     axios
       .get("http://localhost:8080/service/all")
       .then((res) => setFetchServiceRequests(res.data.data));
-  };
-
-  const handleUpdate = () => {
-    axios
-      .put("http://localhost:8080/service/update", formData)
-      .then((res) => alert(res.data.message));
-  };
-
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
   };
 
   return (

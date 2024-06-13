@@ -11,11 +11,10 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class CustomerRegistrationDto {
 
-    private Integer customerId;
-    private String customerFirstName;
-    private String customerLastName;
+public class AdminDto {
+	private String adminFirstName;
+    private String adminLastName;
     private String email;
     private String password;
     private String phoneNo;
