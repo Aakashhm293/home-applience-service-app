@@ -2,19 +2,18 @@ package com.excel.homeas.service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.excel.homeas.constant.ApplicationConstants;
-import com.excel.homeas.dto.AdminDto;
-import com.excel.homeas.dto.AdminLoginDto;
 import com.excel.homeas.dto.ApplianceDto;
 import com.excel.homeas.dto.CustomerLoginDto;
 import com.excel.homeas.dto.CustomerRegistrationDto;
 import com.excel.homeas.dto.ServiceRequestsDto;
 import com.excel.homeas.dto.TechnicianLoginDto;
 import com.excel.homeas.dto.TechnicianRegistrationDto;
-import com.excel.homeas.entity.Admin;
 import com.excel.homeas.entity.Appliance;
 import com.excel.homeas.entity.Customer;
 import com.excel.homeas.entity.ServiceRequests;
@@ -23,7 +22,6 @@ import com.excel.homeas.exceptions.appliance.ApplianceException;
 import com.excel.homeas.exceptions.customer.CustomerException;
 import com.excel.homeas.exceptions.servicerequest.ServiceRequestException;
 import com.excel.homeas.exceptions.technician.TechnicianException;
-import com.excel.homeas.repository.AdminRepository;
 import com.excel.homeas.repository.ApplianceRepository;
 import com.excel.homeas.repository.CustomerRepository;
 import com.excel.homeas.repository.ServiceRequestRepository;
@@ -43,7 +41,7 @@ public class ApplicationServiceImpl implements ApplicationService {
 
     private final ApplianceRepository applianceRepository;
     
-    private final AdminRepository adminRepository;
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     // ------------------------[ Customer ]----------------------------
 
@@ -58,7 +56,7 @@ public class ApplicationServiceImpl implements ApplicationService {
                     .customerFirstName(dto.getCustomerFirstName())
                     .customerLastName(dto.getCustomerLastName())
                     .email(dto.getEmail())
-                    .password(dto.getPassword())
+                    .password(bCryptPasswordEncoder.encode(dto.getPassword()))
                     .phoneNo(dto.getPhoneNo())
                     .address(dto.getAddress())
                     .build();
@@ -89,22 +87,57 @@ public class ApplicationServiceImpl implements ApplicationService {
         }
 
     }
-    
+
     @Override
-    public CustomerLoginDto checkCustomerLogin(CustomerLoginDto dto) {
+    public String updateCustomerDetails(CustomerRegistrationDto dto) {
+        Optional<Customer> optional = customerRepository.findByEmail(dto.getEmail());
+
+        if (optional.isPresent()) {
+            Customer customer = optional.get();
+
+            Customer customer1 = Customer.builder()
+                    .customerFirstName(dto.getCustomerFirstName())
+                    .customerLastName(dto.getCustomerLastName())
+                    .email(dto.getEmail())
+                    .password(dto.getPassword())
+                    .phoneNo(dto.getPhoneNo())
+                    .address(dto.getAddress())
+                    .build();
+
+            customer.setCustomerFirstName(customer1.getCustomerFirstName());
+            customer.setCustomerLastName(customer1.getCustomerLastName());
+            customer.setEmail(customer1.getEmail());
+            customer.setPassword(customer1.getPassword());
+            customer.setPhoneNo(customer1.getPhoneNo());
+            customer.setAddress(customer1.getAddress());
+
+            return customerRepository.save(customer).getEmail();
+        }
+
+        throw new CustomerException(ApplicationConstants.CUSTOMER_NOT_REGISTERED);
+    }
+
+    @Override
+    public String deleteCustomerDetails(CustomerRegistrationDto dto) {
+        Optional<Customer> optional = customerRepository.findByEmail(dto.getEmail());
+
+        if (optional.isPresent()) {
+            Customer customer = optional.get();
+            customerRepository.delete(customer);
+            return "Successfully Deleted";
+        }
+        throw new CustomerException(ApplicationConstants.CUSTOMER_NOT_FOUND);
+    }
+
+    @Override
+    public Integer checkCustomerLogin(CustomerLoginDto dto) {
         Optional<Customer> optional = customerRepository.findByEmail(dto.getEmail());
         if (optional.isPresent()) {
             Customer customer = optional.get();
-            if (customer.getPassword().equals(dto.getPassword())) {
-                return CustomerLoginDto.builder()
-                		.response(1)
-                		.name(customer.getCustomerFirstName())
-                		.email(customer.getEmail())
-                		.build();
+            if (bCryptPasswordEncoder.matches(dto.getPassword(), customer.getPassword())) {
+                return 1;
             } else {
-                return CustomerLoginDto.builder()
-                		.response(0)
-                		.build();
+                return 0;
             }
         } else {
             throw new CustomerException(ApplicationConstants.CUSTOMER_NOT_FOUND);
@@ -114,25 +147,23 @@ public class ApplicationServiceImpl implements ApplicationService {
     // ---------------------------------[ Technician ]------------------------------
 
     @Override
-    public Integer saveTechnicianDetails(TechnicianRegistrationDto dto) {
+    public String saveTechnicianDetails(TechnicianRegistrationDto dto) {
         Optional<Technician> optional = technicianRepository.findByEmail(dto.getEmail());
 
         if (optional.isPresent()) {
             throw new TechnicianException(ApplicationConstants.TECHNICIAN_DETAILS_ALREADY_EXISTS);
-        } else {
-        	Technician technician = Technician.builder()
-                    .technicianFirstName(dto.getTechnicianFirstName())
-                    .technicianLastName(dto.getTechnicianLastName())
-                    .email(dto.getEmail())
-                    .password(dto.getPassword())
-                    .phoneNo(dto.getPhoneNo())
-                    .address(dto.getAddress())
-                    .status(dto.getStatus())
-                    .build();
-        	
-        	technicianRepository.save(technician);
-        	return 1;
         }
+        Technician technician = Technician.builder()
+                .technicianFirstName(dto.getTechnicianFirstName())
+                .technicianLastName(dto.getTechnicianLastName())
+                .email(dto.getEmail())
+                .password(dto.getPassword())
+                .phoneNo(dto.getPhoneNo())
+                .address(dto.getAddress())
+                .status(dto.getStatus())
+                .build();
+
+        return technicianRepository.save(technician).getEmail();
     }
 
     @Override
@@ -335,7 +366,7 @@ public class ApplicationServiceImpl implements ApplicationService {
                 .appointmentDate(e.getAppointmentDate())
                 .serviceStatus(e.getServiceStatus())
                 .comment(e.getComment())
-                .build()).toList();
+                .build()).collect(Collectors.toList());
     }
 
     @Override
@@ -351,58 +382,14 @@ public class ApplicationServiceImpl implements ApplicationService {
             requests.setServiceStatus(serviceRequests.getServiceStatus());
             requests.setComment(serviceRequests.getComment());
 
-            Integer save = serviceRequestRepository.save(requests).getCustomer().getCustomerId();
+            ServiceRequests save = serviceRequestRepository.save(requests);
             
-            if(save != null) {
+            if(save !=null) {
             	return 1;
+            }else {
+            	return 0;
             }
         }
         throw new ServiceRequestException(ApplicationConstants.SERVICE_REQUEST_NOT_FOUND);
     }
-    
-    // ---------------- [ Admin ] ------------------
-
-	@Override
-	public Integer saveAdminInfo(AdminDto dto) {
-		Admin admin = Admin.builder()
-		.adminFirstName(dto.getAdminFirstName())
-		.adminLastName(dto.getAdminLastName())
-		.email(dto.getEmail())
-		.password(dto.getPassword())
-		.phoneNo(dto.getPhoneNo())
-		.address(dto.getAddress())
-		.build();
-		
-		Integer adminId = adminRepository.save(admin).getAdminId();
-		if(adminId != null) {
-			return 1;
-		} else {
-			throw new CustomerException(ApplicationConstants.CUSTOMER_NOT_FOUND);
-		}
-	}
-
-	@Override
-	public AdminLoginDto checkAdminLogin(AdminLoginDto dto) {
-		Technician.builder()
-		.email(dto.getEmail())
-		.build();
-				
-		Optional<Admin> optional = adminRepository.findByEmail(dto.getEmail());
-		if(optional.isPresent()) {
-			Admin admin = optional.get();
-			if(admin.getPassword().equals(dto.getPassword())){
-				return AdminLoginDto.builder()
-						.response(1)
-						.name(admin.getAdminFirstName())
-						.email(admin.getEmail())
-						.build();
-			} else {
-				return AdminLoginDto.builder()
-						.response(0)
-						.build();
-			}
-		}
-//		return throw Admin not found exp; complete this
-		return null;
-	}
 }

@@ -1,15 +1,8 @@
 package com.excel.homeas.service;
 
-import java.util.List;
+import com.excel.homeas.dto.*;
 
-import com.excel.homeas.dto.AdminDto;
-import com.excel.homeas.dto.AdminLoginDto;
-import com.excel.homeas.dto.ApplianceDto;
-import com.excel.homeas.dto.CustomerLoginDto;
-import com.excel.homeas.dto.CustomerRegistrationDto;
-import com.excel.homeas.dto.ServiceRequestsDto;
-import com.excel.homeas.dto.TechnicianLoginDto;
-import com.excel.homeas.dto.TechnicianRegistrationDto;
+import java.util.List;
 
 public interface ApplicationService {
 
@@ -20,12 +13,16 @@ public interface ApplicationService {
 
     public CustomerRegistrationDto getAllCustomerDetails(CustomerRegistrationDto dto);
 
-    public CustomerLoginDto checkCustomerLogin(CustomerLoginDto dto);
+    public String updateCustomerDetails(CustomerRegistrationDto dto);
+
+    public String deleteCustomerDetails(CustomerRegistrationDto dto);
+
+    public Integer checkCustomerLogin(CustomerLoginDto dto);
 
 
     // ------[ Technician ]-----
 
-    public Integer saveTechnicianDetails(TechnicianRegistrationDto dto);
+    public String saveTechnicianDetails(TechnicianRegistrationDto dto);
 
     public TechnicianRegistrationDto getTechnicianDetails(TechnicianRegistrationDto dto);
 
@@ -54,10 +51,4 @@ public interface ApplicationService {
     public List<ServiceRequestsDto> getAllServiceRequests();
 
     public Integer updateServiceRequestDetails(ServiceRequestsDto dto);
-    
-    // -----[ Admin ]-----
-
-	public Integer saveAdminInfo(AdminDto dto);
-
-	public AdminLoginDto checkAdminLogin(AdminLoginDto dto);
 }
