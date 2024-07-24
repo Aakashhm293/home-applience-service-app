@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.excel.homeas.HomeasApplicationTests" tests="1" skipped="0" failures="0" errors="0" timestamp="2024-07-24T10:31:49" hostname="ES-SYS-0288" time="0.909">
+  <properties/>
+  <testcase name="contextLoads()" classname="com.excel.homeas.HomeasApplicationTests" time="0.909"/>
+  <system-out><![CDATA[16:01:41.619 [Test worker] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [com.excel.homeas.HomeasApplicationTests]: HomeasApplicationTests does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+16:01:41.809 [Test worker] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration com.excel.homeas.HomeasApplication for test class com.excel.homeas.HomeasApplicationTests
+  ______   __                           __               ___             ______             __        __                                          __ 
+ /      \ |  \                         |  \             /   \           /      \           |  \      |  \                                        |  \
+|  $$$$$$\| $$   __  ______    _______ | $$____        |  $$$\         |  $$$$$$\  _______ | $$____   \$$  ______   __   __   __   ______    ____| $$
+| $$__| $$| $$  /  \|      \  /       \| $$    \        \$$ $$__       | $$__| $$ /       \| $$    \ |  \ /      \ |  \ |  \ |  \ |      \  /      $$
+| $$    $$| $$_/  $$ \$$$$$$\|  $$$$$$$| $$$$$$$\      | \$$$/  \      | $$    $$|  $$$$$$$| $$$$$$$\| $$|  $$$$$$\| $$ | $$ | $$  \$$$$$$\|  $$$$$$$
+| $$$$$$$$| $$   $$ /      $$ \$$    \ | $$  | $$      | $$\$$ $$      | $$$$$$$$ \$$    \ | $$  | $$| $$| $$   \$$| $$ | $$ | $$ /      $$| $$  | $$
+| $$  | $$| $$$$$$\|  $$$$$$$ _\$$$$$$\| $$  | $$      | $$_\$$\       | $$  | $$ _\$$$$$$\| $$  | $$| $$| $$      | $$_/ $$_/ $$|  $$$$$$$| $$__| $$
+| $$  | $$| $$  \$$\\$$    $$|       $$| $$  | $$       \$$  \$$\      | $$  | $$|       $$| $$  | $$| $$| $$       \$$   $$   $$ \$$    $$ \$$    $$
+ \$$   \$$ \$$   \$$ \$$$$$$$ \$$$$$$$  \$$   \$$        \$$$$ $$       \$$   \$$ \$$$$$$$  \$$   \$$ \$$ \$$        \$$$$$\$$$$   \$$$$$$$  \$$$$$$$
+                                                                                                                                                     
+                                                                                                                                                     
+                                                                                                                                                     
+2024-07-24T16:01:42.409+05:30  INFO 13668 --- [homeapplienceservice] [    Test worker] c.excel.homeas.HomeasApplicationTests    : Starting HomeasApplicationTests using Java 17.0.12 with PID 13668 (started by akash.hm in C:\Users\akash.hm\Desktop\HomeApplianceServiceBackend)
+2024-07-24T16:01:42.412+05:30  INFO 13668 --- [homeapplienceservice] [    Test worker] c.excel.homeas.HomeasApplicationTests    : No active profile set, falling back to 1 default profile: "default"
+2024-07-24T16:01:43.481+05:30  INFO 13668 --- [homeapplienceservice] [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-07-24T16:01:43.611+05:30  INFO 13668 --- [homeapplienceservice] [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 117 ms. Found 5 JPA repository interfaces.
+2024-07-24T16:01:44.367+05:30  INFO 13668 --- [homeapplienceservice] [    Test worker] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-07-24T16:01:44.469+05:30  INFO 13668 --- [homeapplienceservice] [    Test worker] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.5.2.Final
+2024-07-24T16:01:44.535+05:30  INFO 13668 --- [homeapplienceservice] [    Test worker] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2024-07-24T16:01:45.057+05:30  INFO 13668 --- [homeapplienceservice] [    Test worker] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2024-07-24T16:01:45.124+05:30  INFO 13668 --- [homeapplienceservice] [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2024-07-24T16:01:45.679+05:30  INFO 13668 --- [homeapplienceservice] [    Test worker] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@4ef31221
+2024-07-24T16:01:45.682+05:30  INFO 13668 --- [homeapplienceservice] [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2024-07-24T16:01:45.757+05:30  WARN 13668 --- [homeapplienceservice] [    Test worker] org.hibernate.orm.deprecation            : HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2024-07-24T16:01:47.259+05:30  INFO 13668 --- [homeapplienceservice] [    Test worker] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+Hibernate: 
+    alter table appliances 
+       drop 
+       foreign key FKd9jbcxh1wtnwcyfya7kcg820e
+Hibernate: 
+    alter table service_requests 
+       drop 
+       foreign key FK4ay5s8r609avogjqwiv6mauwg
+Hibernate: 
+    drop table if exists admin
+Hibernate: 
+    drop table if exists appliances
+Hibernate: 
+    drop table if exists customer
+Hibernate: 
+    drop table if exists service_requests
+Hibernate: 
+    drop table if exists technician
+Hibernate: 
+    create table admin (
+        admin_id integer not null auto_increment,
+        address varchar(255),
+        admin_first_name varchar(255),
+        admin_last_name varchar(255),
+        email varchar(255),
+        password varchar(255),
+        phone_no varchar(255),
+        primary key (admin_id)
+    ) engine=InnoDB
+Hibernate: 
+    create table appliances (
+        appliance_id integer not null auto_increment,
+        customer_id integer,
+        year_of_manufacturing date,
+        product_serial varchar(255),
+        appliance_brand enum ('BOSCH','DLINK','LG','SAMSUNG','SONY','TOSHIBA','TPLINK'),
+        product_type enum ('AIRCONDITIONER','COFFEEDISPENSER','FAN','REFRIGERATOR','WASHINGMACHINE','WIRELESSROUTER'),
+        warranty_status enum ('OUTOFWARRENTY','UNDERWARRENTY'),
+        primary key (appliance_id)
+    ) engine=InnoDB
+Hibernate: 
+    create table customer (
+        customer_id integer not null auto_increment,
+        address varchar(255),
+        customer_first_name varchar(255),
+        customer_last_name varchar(255),
+        email varchar(255),
+        password varchar(255),
+        phone_no varchar(255),
+        primary key (customer_id)
+    ) engine=InnoDB
+Hibernate: 
+    create table service_requests (
+        appointment_date date,
+        created_on date,
+        customer_id integer,
+        service_id integer not null auto_increment,
+        updated_on date,
+        comments varchar(255),
+        service_status enum ('ACTIVE','COMPLETED','ONQUEUE'),
+        primary key (service_id)
+    ) engine=InnoDB
+Hibernate: 
+    create table technician (
+        technician_id integer not null auto_increment,
+        address varchar(255),
+        email varchar(255),
+        password varchar(255),
+        phone_no varchar(255),
+        technician_first_name varchar(255),
+        technician_last_name varchar(255),
+        status enum ('ABSCOND','ACTIVE','LEFT'),
+        primary key (technician_id)
+    ) engine=InnoDB
+Hibernate: 
+    alter table admin 
+       add constraint UKc0r9atamxvbhjjvy5j8da1kam unique (email)
+Hibernate: 
+    alter table appliances 
+       add constraint UK9gn14xfyfgx6ei7s8yh5tnbwp unique (customer_id)
+Hibernate: 
+    alter table customer 
+       add constraint UKdwk6cx0afu8bs9o4t536v1j5v unique (email)
+Hibernate: 
+    alter table service_requests 
+       add constraint UK6y1pr2oaeuloyrgev26msmrme unique (customer_id)
+Hibernate: 
+    alter table appliances 
+       add constraint FKd9jbcxh1wtnwcyfya7kcg820e 
+       foreign key (customer_id) 
+       references customer (customer_id)
+Hibernate: 
+    alter table service_requests 
+       add constraint FK4ay5s8r609avogjqwiv6mauwg 
+       foreign key (customer_id) 
+       references customer (customer_id)
+2024-07-24T16:01:47.592+05:30  INFO 13668 --- [homeapplienceservice] [    Test worker] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-07-24T16:01:48.350+05:30  WARN 13668 --- [homeapplienceservice] [    Test worker] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2024-07-24T16:01:48.993+05:30  INFO 13668 --- [homeapplienceservice] [    Test worker] c.excel.homeas.HomeasApplicationTests    : Started HomeasApplicationTests in 6.855 seconds (process running for 8.692)
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
